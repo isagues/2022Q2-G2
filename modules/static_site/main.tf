@@ -1,12 +1,3 @@
-resource "random_pet" "this" {
-  length = 2
-}
-
-locals {
-  bucket_name = "static-site-${random_pet.this.id}"
-}
-
-
 module "log_bucket" {
   source = "terraform-aws-modules/s3-bucket/aws"
 

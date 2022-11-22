@@ -6,7 +6,7 @@ data "aws_cloudfront_cache_policy" "optimized" {
   name = "Managed-CachingOptimized"
 }
 
-resource "aws_cloudfront_distribution" "main" {
+resource "aws_cloudfront_distribution" "this" {
   # Si se usa www hay problemas de permisos, la policy dice que solo cloudfront lee pega a site
   origin {
     domain_name = var.bucket_domain_name

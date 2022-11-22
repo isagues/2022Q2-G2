@@ -1,4 +1,4 @@
-data "aws_route53_zone" "main" {
+data "aws_route53_zone" "this" {
   name = var.base_domain
 }
 
@@ -18,8 +18,8 @@ data "aws_route53_zone" "main" {
 #   }
 # }
 
-resource "aws_route53_record" "main" {
-  zone_id = data.aws_route53_zone.main.zone_id
+resource "aws_route53_record" "this" {
+  zone_id = data.aws_route53_zone.this.zone_id
   name    = var.app_domain
   type    = "A"
 
