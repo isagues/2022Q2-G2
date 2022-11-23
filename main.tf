@@ -80,45 +80,51 @@ module "api_gateway" {
 
 }
 
-resource "aws_iam_role" "lambda" {
-  name = "iam_role_for_lambda"
-
-  assume_role_policy = jsonencode(
-    {
-      "Version" : "2012-10-17",
-      "Statement" : [
-        {
-          "Action" : "sts:AssumeRole",
-          "Principal" : {
-            "Service" : "lambda.amazonaws.com"
-          },
-          "Effect" : "Allow",
-          "Sid" : ""
-        }
-      ]
-  })
-
-  inline_policy {
-    name = "policy_vpc_attaching"
-    policy = jsonencode({
-      "Version" : "2012-10-17",
-      "Statement" : [
-        {
-          "Effect" : "Allow",
-          "Action" : [
-            "ec2:DescribeNetworkInterfaces",
-            "ec2:CreateNetworkInterface",
-            "ec2:DeleteNetworkInterface",
-            "ec2:DescribeInstances",
-            "ec2:AttachNetworkInterface"
-          ],
-          "Resource" : "*"
-        }
-      ]
-    })
-  }
-
+data "aws_iam_role" "this" {
+  name = "LabRole"
 }
+
+
+# resource "aws_iam_role" "lambda" {
+#   name = "iam_role_for_lambda"
+
+#   assume_role_policy = jsonencode(
+#     {
+#       "Version" : "2012-10-17",
+#       "Statement" : [
+#         {
+#           "Action" : "sts:AssumeRole",
+#           "Resource": "arn:aws:iam::990153076553:role/LabRole"
+#           # "Principal" : {
+#           #   "Service" : "lambda.amazonaws.com"
+#           # },
+#           "Effect" : "Allow",
+#           "Sid" : ""
+#         }
+#       ]
+#   })
+
+#   # inline_policy {
+#   #   name = "policy_vpc_attaching"
+#   #   policy = jsonencode({
+#   #     "Version" : "2012-10-17",
+#   #     "Statement" : [
+#   #       {
+#   #         "Effect" : "Allow",
+#   #         "Action" : [
+#   #           "ec2:DescribeNetworkInterfaces",
+#   #           "ec2:CreateNetworkInterface",
+#   #           "ec2:DeleteNetworkInterface",
+#   #           "ec2:DescribeInstances",
+#   #           "ec2:AttachNetworkInterface"
+#   #         ],
+#   #         "Resource" : "*"
+#   #       }
+#   #     ]
+#   #   })
+#   # }
+
+# }
 
 resource "aws_security_group" "lambda" {
   name   = "lambda_sg"
@@ -171,6 +177,7 @@ module "lambda" {
 
   gateway_id          = module.api_gateway.id
   gateway_resource_id = module.api_gateway.resource_id
+  execution_arn       = module.api_gateway.execution_arm
 
   path_part   = "test"
   http_method = "GET"
@@ -178,7 +185,7 @@ module "lambda" {
 
   subnet_ids      = module.vpc.private_subnets_ids
   vpc_id          = module.vpc.vpc_id
-  role            = aws_iam_role.lambda.arn
+  role            = data.aws_iam_role.this.arn
   security_groups = [aws_security_group.lambda.id]
   tags = {
     Name = "Test Lambda"
@@ -199,6 +206,7 @@ module "lambda_busquedas" {
 
   gateway_id          = module.api_gateway.id
   gateway_resource_id = module.api_gateway.resource_id
+  execution_arn       = module.api_gateway.execution_arm
 
   path_part   = "listar_busquedas"
   http_method = "GET"
@@ -206,7 +214,7 @@ module "lambda_busquedas" {
 
   subnet_ids      = module.vpc.private_subnets_ids
   vpc_id          = module.vpc.vpc_id
-  role            = aws_iam_role.lambda.arn
+  role            = data.aws_iam_role.this.arn
   security_groups = [aws_security_group.lambda.id]
   tags = {
     Name = "ListarBusquedas Lambda"

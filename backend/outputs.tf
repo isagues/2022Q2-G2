@@ -7,7 +7,7 @@
 
 output "bucket" {
   description = "Bucket"
-  value       = aws_s3_bucket.state.id
+  value       = aws_s3_bucket.this.id
 }
 
 output "region" {

@@ -68,6 +68,10 @@ variable "gateway_resource_id" {
   type        = string
 }
 
+variable "execution_arn" {
+  type        = string
+}
+
 variable "path_part" {
   description = "The path to call lambda"
   type        = string

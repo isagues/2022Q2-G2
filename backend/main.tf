@@ -1,25 +1,9 @@
-terraform {
-  required_version = "~> 1.3.0"
-
-  required_providers {
-    aws = {
-      source  = "hashicorp/aws"
-      version = "~> 4.18.0"
-    }
-  }
-}
-
-provider "aws" {
-  region = var.aws_region
-}
-
-
-resource "aws_s3_bucket" "state" {
+resource "aws_s3_bucket" "this" {
   bucket_prefix = "state"
 }
 
-resource "aws_s3_bucket_public_access_block" "state" {
-  bucket = aws_s3_bucket.state.id
+resource "aws_s3_bucket_public_access_block" "this" {
+  bucket = aws_s3_bucket.this.id
 
   block_public_acls       = true
   block_public_policy     = true
@@ -27,10 +11,10 @@ resource "aws_s3_bucket_public_access_block" "state" {
   restrict_public_buckets = true
 }
 
-data "aws_iam_policy_document" "bucket" {
+data "aws_iam_policy_document" "this" {
   statement {
     actions   = ["s3:ListBucket"]
-    resources = ["${aws_s3_bucket.state.arn}"]
+    resources = ["${aws_s3_bucket.this.arn}"]
 
     principals {
       type        = "AWS"
@@ -39,7 +23,7 @@ data "aws_iam_policy_document" "bucket" {
   }
   statement {
     actions   = ["s3:GetObject", "s3:PutObject", "s3:DeleteObject"]
-    resources = ["${aws_s3_bucket.state.arn}/*"]
+    resources = ["${aws_s3_bucket.this.arn}/*"]
 
     principals {
       type        = "AWS"
@@ -48,7 +32,7 @@ data "aws_iam_policy_document" "bucket" {
   }
 }
 
-resource "aws_s3_bucket_policy" "state" {
-  bucket = aws_s3_bucket.state.id
-  policy = data.aws_iam_policy_document.bucket.json
+resource "aws_s3_bucket_policy" "this" {
+  bucket = aws_s3_bucket.this.id
+  policy = data.aws_iam_policy_document.this.json
 }

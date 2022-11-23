@@ -8,6 +8,10 @@ output "id" {
   value       = aws_api_gateway_rest_api.this.id
 }
 
+output "execution_arm" {
+  value = aws_api_gateway_rest_api.this.execution_arn
+}
+
 output "resource_id" {
   description = "The api gateway resource_id"
   value       = aws_api_gateway_rest_api.this.root_resource_id
