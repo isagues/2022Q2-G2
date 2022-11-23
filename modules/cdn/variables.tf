@@ -28,3 +28,7 @@ variable "certificate_arn" {
   type = string
   # default     = null
 }
+
+variable "waf_arn" {
+  type = string
+}

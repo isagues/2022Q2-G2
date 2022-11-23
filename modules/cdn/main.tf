@@ -34,6 +34,7 @@ resource "aws_cloudfront_distribution" "this" {
   comment             = "cdn"
   default_root_object = "index.html"
   aliases             = var.aliases
+  web_acl_id          = var.waf_arn
 
 
   default_cache_behavior {
