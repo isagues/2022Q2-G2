@@ -14,6 +14,12 @@ module "log_bucket" {
   acl           = "log-delivery-write"
   force_destroy = true
 
+  # S3 bucket-level Public Access Block configuration
+  block_public_acls       = true
+  block_public_policy     = true
+  ignore_public_acls      = true
+  restrict_public_buckets = true
+
   attach_deny_insecure_transport_policy = true
   attach_require_latest_tls_policy      = true
 }

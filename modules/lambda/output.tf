@@ -12,7 +12,7 @@ output "lambda_rest_configuration_hash" {
   ]))
 }
 
-
-
-
+output "function_name" {
+  value = aws_lambda_function.this.function_name
+}
 
