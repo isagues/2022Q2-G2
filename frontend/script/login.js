@@ -77,8 +77,7 @@ function authenticateUser() {
 						.getJwtToken(),
 				},
 			});
-			console.log('id jwt token:');
-			console.log(idToken);
+			localStorage.setItem('jwt', accessToken);
 
 			//refreshes credentials using AWS.CognitoIdentity.getCredentialsForIdentity()
 			AWS.config.credentials.refresh(error => {
