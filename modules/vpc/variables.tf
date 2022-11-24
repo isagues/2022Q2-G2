@@ -11,3 +11,7 @@ variable "zones_count" {
   type        = number
   default     = 2
 }
+
+variable "endpoint_services" {
+  type = list(string)
+}
