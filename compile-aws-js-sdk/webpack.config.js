@@ -6,6 +6,6 @@ module.exports = {
 	// Place output files in `./dist/my-app.js`
 	output: {
 		path: __dirname + '/dist',
-		filename: 'cognito-auth.js',
+		filename: 'aws-sdk.js',
 	},
 };
