@@ -1,0 +1,19 @@
+{
+  "name": "amazon_sdk_cloud",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "build": "webpack",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Bensas",
+  "license": "ISC",
+  "dependencies": {
+    "amazon-cognito-identity-js": "^6.0.1",
+    "aws-sdk": "^2.1261.0"
+  },
+  "devDependencies": {
+    "webpack-cli": "^5.0.0"
+  }
+}
