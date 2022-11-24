@@ -45,7 +45,8 @@ resource "aws_api_gateway_method" "this" {
   rest_api_id   = var.gateway_id
   resource_id   = aws_api_gateway_resource.this.id
   http_method   = var.http_method
-  authorization = "NONE"
+  authorization = "COGNITO_USER_POOLS"
+  authorizer_id  = var.gateway_authoriser_id
 }
 
 # PATH /test - Definir la lambda

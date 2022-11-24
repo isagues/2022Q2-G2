@@ -189,6 +189,7 @@ module "lambda" {
   ssm_endpoint   = module.vpc.ssm_endpoint 
 
   gateway_id          = module.api_gateway.id
+  gateway_authoriser_id = module.api_gateway.gateway_authoriser_id
   gateway_resource_id = module.api_gateway.resource_id
   execution_arn       = module.api_gateway.execution_arm
 
@@ -219,6 +220,7 @@ module "lambda_busquedas" {
   ssm_endpoint   = module.vpc.ssm_endpoint 
 
   gateway_id          = module.api_gateway.id
+  gateway_authoriser_id = module.api_gateway.gateway_authoriser_id
   gateway_resource_id = module.api_gateway.resource_id
   execution_arn       = module.api_gateway.execution_arm
 
@@ -249,6 +251,7 @@ module "sns_lambda" {
   ssm_endpoint   = module.vpc.ssm_endpoint 
 
   gateway_id          = module.api_gateway.id
+  gateway_authoriser_id = module.api_gateway.gateway_authoriser_id
   gateway_resource_id = module.api_gateway.resource_id
   execution_arn       = module.api_gateway.execution_arm
 
@@ -279,6 +282,7 @@ module "lambda_crear_busqueda" {
   ssm_endpoint   = module.vpc.ssm_endpoint 
 
   gateway_id          = module.api_gateway.id
+  gateway_authoriser_id = module.api_gateway.gateway_authoriser_id
   gateway_resource_id = module.api_gateway.resource_id
   execution_arn       = module.api_gateway.execution_arm
 

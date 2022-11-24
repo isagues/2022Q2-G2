@@ -4,8 +4,13 @@ output "domain_name" {
 }
 
 output "id" {
-  description = "The api gateway domain name"
+  description = "The api gateway id"
   value       = aws_api_gateway_rest_api.this.id
+}
+
+output "gateway_authoriser_id" {
+  description = "The api gateway authoriser id"
+  value       = aws_api_gateway_authorizer.api_authorizer.id
 }
 
 output "execution_arm" {
