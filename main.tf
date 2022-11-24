@@ -83,12 +83,17 @@ module "api_gateway" {
   aws_region = var.aws_region
 
 
-  lambda_hashes = [module.lambda.lambda_rest_configuration_hash, module.lambda_busquedas.lambda_rest_configuration_hash, module.lambda_crear_busqueda.lambda_rest_configuration_hash]
+  lambda_hashes = [
+    module.lambda.lambda_rest_configuration_hash, 
+    module.lambda_busquedas.lambda_rest_configuration_hash, 
+    module.sns_lambda.lambda_rest_configuration_hash, 
+    module.lambda_crear_busqueda.lambda_rest_configuration_hash,
+    ]
 
 }
 
 data "aws_iam_role" "this" {
-  name = "robomaker_students"
+  name = "LabRole"
 }
 
 
