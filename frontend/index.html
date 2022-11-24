@@ -2,39 +2,25 @@
 <html>
   <head>
     <title>This is the title of the webpage!</title>
+    <script src="https://sdk.amazonaws.com/js/aws-sdk-2.1261.0.min.js"></script>
+    <!-- <script src="app.mjs" type="module"></script> -->
+    <!-- <script type="text/javascript">
+      var AWS  = require("aws-sdk");
+      // Initialize the Amazon Cognito credentials provider
+      AWS.config.region = 'us-east-1'; // Region
+      AWS.config.credentials = new AWS.CognitoIdentityCredentials({
+          IdentityPoolId: 'us-east-1:c568480c-ae7a-4718-a8cf-7b8869e3d817',
+      });
+      
+      // When using loose Javascript files:
+    </script> -->
   </head>
   <body>
     <p>This is an example paragraph. Anything in the <strong>body</strong> tag will appear on the page, just like this <strong>p</strong> tag and its contents.</p>
-  
-  <a href id="LoginWithAmazon">
-    <img border="0" alt="Login with Amazon"
-        src="https://images-na.ssl-images-amazon.com/images/G/01/lwa/btnLWA_gold_156x32.png"
-        width="156" height="32" />
- </a>
- <script type="text/javascript">
-  document.getElementById('LoginWithAmazon').onclick = function() {
-      options = {}
-      options.scope = 'profile';
-      options.scope_data = {
-          'profile' : {'essential': false}
-      };
-      amazon.Login.authorize(options,
-          'https://cloud.isagues.ar/handle_login.php');
-      return false;
-  };
-</script>
- <div id="amazon-root"></div>
- <script type="text/javascript">
-
-    window.onAmazonLoginReady = function() {
-      amazon.Login.setClientId('amzn1.application-oa2-client.e6717c5f47314bf98503176ef00af17f');
-    };
-    (function(d) {
-      var a = d.createElement('script'); a.type = 'text/javascript';
-      a.async = true; a.id = 'amazon-login-sdk';
-      a.src = 'https://assets.loginwithamazon.com/sdk/na/login1.js';
-      d.getElementById('amazon-root').appendChild(a);
-    })(document);
-</script>
-</body>
+    <buton id="create-user">Create user</buton>
+    <!-- <buton id="login-user">Login user</buton> -->
+    <buton id="auth-user">Auth</buton>
+    <script defer src="script/cognito-auth.js"></script>
+    <script defer src="script/login.js"></script>
+  </body>
 </html>
