@@ -49,12 +49,21 @@ resource "aws_cloudfront_distribution" "this" {
   # Cache behavior with precedence 0
   ordered_cache_behavior {
     path_pattern     = "/api/*"
-    allowed_methods  = ["GET", "HEAD", "OPTIONS"]
+    allowed_methods  = ["HEAD", "DELETE", "POST", "GET", "OPTIONS", "PUT", "PATCH"]
     cached_methods   = ["GET", "HEAD", "OPTIONS"]
-    cache_policy_id  = data.aws_cloudfront_cache_policy.disabled.id
     target_origin_id = var.api_origin_id
 
+    forwarded_values {
+      query_string = true
+
+      cookies {
+        forward = "none"
+      }
+    }
+
     min_ttl                = 0
+    default_ttl            = 900
+    max_ttl                = 900
     compress               = true
     viewer_protocol_policy = "redirect-to-https"
   }

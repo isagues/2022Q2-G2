@@ -1,0 +1,59 @@
+<!doctype html>
+<html>
+
+<head>
+  <title>This is the title of the webpage!</title>
+
+  <script defer>
+    window.onload = function () {
+      const form = document.getElementById('form');
+      const cv = document.getElementById('cv');
+
+      async function sendIT() {
+        const url = new URL("/api/getPresignedURL", document.baseURI);
+        url.searchParams.append("fname", cv.files[0].name)
+
+        const URLresponse = await fetch(url, {
+          method: 'POST',
+        });
+
+        console.log(URLresponse);
+        const presignedURL = await URLresponse.json();
+
+
+        console.log(presignedURL);
+
+        let response = await fetch(presignedURL.URL, {
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'application/pdf',
+          },
+          body: cv.files[0],
+        });
+        console.log(response);
+      }
+
+      form.addEventListener("submit", (event) => {
+        sendIT();
+        event.preventDefault()
+      });
+    }
+  </script>
+
+</head>
+
+<body>
+  <form id="form" method=POST enctype=multipart/form-data>
+    <!-- upload of a single file -->
+    <p>
+      <label>Add file (single): </label><br />
+      <input type="file" id="cv" name="cv" accept="application/pdf" />
+    </p>
+    <p>
+      <input type="submit" />
+    </p>
+  </form>
+
+</body>
+
+</html>

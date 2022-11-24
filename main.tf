@@ -84,6 +84,7 @@ module "api_gateway" {
 
 
   lambda_hashes = [
+    module.getPresignedURL_lambda.lambda_rest_configuration_hash, 
     module.lambda.lambda_rest_configuration_hash, 
     module.lambda_busquedas.lambda_rest_configuration_hash, 
     module.sns_lambda.lambda_rest_configuration_hash, 
@@ -96,47 +97,6 @@ data "aws_iam_role" "this" {
   name = "LabRole"
 }
 
-
-# resource "aws_iam_role" "lambda" {
-#   name = "iam_role_for_lambda"
-
-#   assume_role_policy = jsonencode(
-#     {
-#       "Version" : "2012-10-17",
-#       "Statement" : [
-#         {
-#           "Action" : "sts:AssumeRole",
-#           "Resource": "arn:aws:iam::990153076553:role/LabRole"
-#           # "Principal" : {
-#           #   "Service" : "lambda.amazonaws.com"
-#           # },
-#           "Effect" : "Allow",
-#           "Sid" : ""
-#         }
-#       ]
-#   })
-
-#   # inline_policy {
-#   #   name = "policy_vpc_attaching"
-#   #   policy = jsonencode({
-#   #     "Version" : "2012-10-17",
-#   #     "Statement" : [
-#   #       {
-#   #         "Effect" : "Allow",
-#   #         "Action" : [
-#   #           "ec2:DescribeNetworkInterfaces",
-#   #           "ec2:CreateNetworkInterface",
-#   #           "ec2:DeleteNetworkInterface",
-#   #           "ec2:DescribeInstances",
-#   #           "ec2:AttachNetworkInterface"
-#   #         ],
-#   #         "Resource" : "*"
-#   #       }
-#   #     ]
-#   #   })
-#   # }
-
-# }
 
 resource "aws_security_group" "lambda" {
   name   = "lambda_sg"
@@ -174,6 +134,36 @@ resource "aws_security_group_rule" "https_in" {
 }
 
 
+
+module "getPresignedURL_lambda" {
+  source = "./modules/lambda"
+
+  function_name = "getPresignedURL"
+  filename      = "./lambda/getPresignedURL.zip"
+  handler       = "getPresignedURL.handler"
+  runtime       = "nodejs12.x"
+
+  base_domain    = var.base_domain
+  aws_account_id = local.aws_account_id
+  aws_region     = var.aws_region
+  ssm_endpoint   = module.vpc.ssm_endpoint 
+
+  gateway_id          = module.api_gateway.id
+  gateway_resource_id = module.api_gateway.resource_id
+  execution_arn       = module.api_gateway.execution_arm
+
+  path_part   = "getPresignedURL"
+  http_method = "POST"
+  status_code = "200"
+
+  subnet_ids      = module.vpc.private_subnets_ids
+  vpc_id          = module.vpc.vpc_id
+  role            = data.aws_iam_role.this.arn
+  security_groups = [aws_security_group.lambda.id]
+  tags = {
+    Name = "Test Lambda"
+  }
+}
 
 module "lambda" {
   source = "./modules/lambda"
@@ -329,4 +319,12 @@ module "dynamodb_table" {
     Terraform   = "true"
     Environment = "staging"
   }
+}
+
+locals {
+  map = {"CONST1": "AAA", "CONSTB": "BBB"}
+}
+
+output "AAAA" {
+  value = join("\n", [for k,v in local.map : "const ${k} = ${v};"])
 }
