@@ -69,7 +69,12 @@ module "vpc" {
 
   cidr_block  = local.aws_vpc_network
   zones_count = local.aws_az_count
-  endpoint_services =  ["dynamodb", "s3"]
+  endpoint_services =  [
+    {service: "dynamodb", type: "Gateway", security_groups: []}, 
+    {service: "s3", type: "Gateway", security_groups: []}, 
+    {service: "sns", type: "Interface", security_groups: [aws_security_group.lambda.id]}, 
+    {service: "ssm", type: "Interface", security_groups: [aws_security_group.lambda.id]}, 
+  ]
 }
 
 module "api_gateway" {
@@ -176,6 +181,7 @@ module "lambda" {
   base_domain    = var.base_domain
   aws_account_id = local.aws_account_id
   aws_region     = var.aws_region
+  ssm_endpoint   = module.vpc.ssm_endpoint 
 
   gateway_id          = module.api_gateway.id
   gateway_resource_id = module.api_gateway.resource_id
@@ -205,6 +211,7 @@ module "lambda_busquedas" {
   base_domain    = var.base_domain
   aws_account_id = local.aws_account_id
   aws_region     = var.aws_region
+  ssm_endpoint   = module.vpc.ssm_endpoint 
 
   gateway_id          = module.api_gateway.id
   gateway_resource_id = module.api_gateway.resource_id
@@ -223,6 +230,36 @@ module "lambda_busquedas" {
   }
 }
 
+module "sns_lambda" {
+  source = "./modules/lambda"
+
+  function_name = "sns"
+  filename      = "./lambda/sns.zip"
+  handler       = "sns.handler"
+  runtime       = "nodejs12.x"
+
+  base_domain    = var.base_domain
+  aws_account_id = local.aws_account_id
+  aws_region     = var.aws_region
+  ssm_endpoint   = module.vpc.ssm_endpoint 
+
+  gateway_id          = module.api_gateway.id
+  gateway_resource_id = module.api_gateway.resource_id
+  execution_arn       = module.api_gateway.execution_arm
+
+  path_part   = "sns"
+  http_method = "GET"
+  status_code = "200"
+
+  subnet_ids      = module.vpc.private_subnets_ids
+  vpc_id          = module.vpc.vpc_id
+  role            = data.aws_iam_role.this.arn
+  security_groups = [aws_security_group.lambda.id]
+  tags = {
+    Name = "sns test"
+  }
+}
+
 module "lambda_crear_busqueda" {
   source = "./modules/lambda"
 
@@ -234,6 +271,7 @@ module "lambda_crear_busqueda" {
   base_domain    = var.base_domain
   aws_account_id = local.aws_account_id
   aws_region     = var.aws_region
+  ssm_endpoint   = module.vpc.ssm_endpoint 
 
   gateway_id          = module.api_gateway.id
   gateway_resource_id = module.api_gateway.resource_id

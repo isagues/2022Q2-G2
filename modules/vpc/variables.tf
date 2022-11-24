@@ -13,5 +13,5 @@ variable "zones_count" {
 }
 
 variable "endpoint_services" {
-  type = list(string)
+  type = list(object({service: string, type: string, security_groups: list(string)}))
 }

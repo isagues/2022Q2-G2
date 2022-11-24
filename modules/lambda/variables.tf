@@ -58,6 +58,10 @@ variable "aws_region" {
   type        = string
 }
 
+variable "ssm_endpoint" {
+  type        = string
+}
+
 variable "gateway_id" {
   description = "The api gateway id"
   type        = string
