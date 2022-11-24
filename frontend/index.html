@@ -2,8 +2,25 @@
 <html>
   <head>
     <title>This is the title of the webpage!</title>
+    <script src="https://sdk.amazonaws.com/js/aws-sdk-2.1261.0.min.js"></script>
+    <!-- <script src="app.mjs" type="module"></script> -->
+    <!-- <script type="text/javascript">
+      var AWS  = require("aws-sdk");
+      // Initialize the Amazon Cognito credentials provider
+      AWS.config.region = 'us-east-1'; // Region
+      AWS.config.credentials = new AWS.CognitoIdentityCredentials({
+          IdentityPoolId: 'us-east-1:c568480c-ae7a-4718-a8cf-7b8869e3d817',
+      });
+      
+      // When using loose Javascript files:
+    </script> -->
   </head>
   <body>
     <p>This is an example paragraph. Anything in the <strong>body</strong> tag will appear on the page, just like this <strong>p</strong> tag and its contents.</p>
+    <buton id="create-user">Create user</buton>
+    <!-- <buton id="login-user">Login user</buton> -->
+    <buton id="auth-user">Auth</buton>
+    <script defer src="script/cognito-auth.js"></script>
+    <script defer src="script/login.js"></script>
   </body>
 </html>
