@@ -13,6 +13,12 @@ resource "aws_lambda_function" "this" {
     security_group_ids = var.security_groups
   }
 
+  environment {
+    variables = {
+      ssm_endpoint = var.ssm_endpoint
+    }
+  }
+
   tags = var.tags
 }
 
