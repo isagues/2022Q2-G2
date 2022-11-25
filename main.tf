@@ -236,7 +236,7 @@ module "lambda_ver_aplicaciones" {
   source = "./modules/lambda"
 
   function_name = "ver_aplicaciones"
-  filename      = "./lambda/ver_aplicaciones.zip"
+  filename      = "./lambda/ver_aplicaciones.js"
   handler       = "ver_aplicaciones.handler"
   runtime       = "nodejs12.x"
 
@@ -328,7 +328,7 @@ module "lambda_ver_busqueda" {
   source = "./modules/lambda"
 
   function_name = "ver_busqueda"
-  filename      = "./lambda/ver_busqueda.zip"
+  filename      = "./lambda/ver_busqueda.js"
   handler       = "ver_busqueda.handler"
   runtime       = "nodejs12.x"
 
