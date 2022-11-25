@@ -31,6 +31,9 @@ resource "aws_lambda_permission" "apigw_lambda" {
 
   # source_arn = "arn:aws:execute-api:${var.aws_region}:${var.aws_account_id}:${var.gateway_id}/*/${aws_api_gateway_method.this.http_method}${aws_api_gateway_resource.this.path}"
   source_arn = "${var.execution_arn}/*/*/*"
+  depends_on = [
+    aws_lambda_function.this
+  ]
 }
 
 # /path
