@@ -1,12 +1,3 @@
-// const USER_POOL_ID = 'us-east-1_rQcYJzVw5';
-// const IDENTITY_POOL_ID = 'us-east-1:9fb9f627-ea84-40c5-9eea-460a69e9d6a7';
-// const CLIENT_ID = '1e3fhulu7k2bp2md70ufmnains';
-// const AWS_REGION = 'us-east-1';
-// const COGNITO_IDP = 'cognito-idp.us-east-1.amazonaws.com/us-east-1_16lDQzCJU';
-// const COGNITO_IDP = 'cognito-idp.' + AWS_REGION + '.amazonaws.com/' + USER_POOL_ID;
-
-var apigClient = apigClientFactory.newClient();
-
 function signUpUser() {
 	var poolData = {
 		UserPoolId: USER_POOL_ID,
