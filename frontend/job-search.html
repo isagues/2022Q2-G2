@@ -3,7 +3,7 @@
   <head>
     <title>JobSearch!</title>
     
-    <script src="scripts/auth-guard.js"></script>
+    <!-- <script src="scripts/auth-guard.js"></script> -->
     <script defer src="https://sdk.amazonaws.com/js/aws-sdk-2.1261.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
     <script type="text/javascript" src="scripts/lib/axios/dist/axios.standalone.js"></script>
@@ -17,6 +17,7 @@
     <script type="text/javascript" src="scripts/lib/apiGatewayCore/simpleHttpClient.js"></script>
     <script type="text/javascript" src="scripts/lib/apiGatewayCore/utils.js"></script>
     <script type="text/javascript" src="scripts/lib/cognito-auth.js"></script>
+    <script type="text/javascript" src="scripts/lib/qrcode.min.js"></script>
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <link href="styles/login.css" rel="stylesheet">
@@ -28,17 +29,10 @@
           <div class="col-md-8 col-lg-6 col-xl-4 offset-xl-1">
             <form>
               <div class="divider d-flex align-items-center my-4">
-                <h2 class="text-center fw-bold mx-3 mb-0">Job Searches</h2>
+                <h2 class="text-center fw-bold mx-3 mb-0">Búsqueda abierta</h2>
               </div>
 
-              <ul id="job-list" class="list-group">
-                <li class="list-group-item active">Cras justo odio</li>
-                <li class="list-group-item">Dapibus ac facilisis in</li>
-                <li class="list-group-item">Morbi leo risus</li>
-                <li class="list-group-item">Porta ac consectetur ac</li>
-                <li class="list-group-item">Vestibulum at eros</li>
-              </ul>
-    
+              <div id="qrcode"></div>
     
             </form>
           </div>
@@ -58,6 +52,6 @@
     <script defer src="scripts/apigClient.js"></script>
     <script defer src="scripts/endpoint-calls.js"></script>
     <script defer src="scripts/cognito.js"></script>
-    <script defer src="scripts/list-job-searches.js"></script>
+    <script defer src="scripts/job-search.js"></script>
   </body>
 </html>
