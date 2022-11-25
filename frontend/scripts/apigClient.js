@@ -119,24 +119,6 @@ apigClientFactory.newClient = function (config) {
     };
     
     
-    apigClient.listarAplicantesGet = function (params, body, additionalParams) {
-        if(additionalParams === undefined) { additionalParams = {}; }
-        
-        apiGateway.core.utils.assertParametersDefined(params, [], ['body']);
-        
-        var listarAplicantesGetRequest = {
-            verb: 'get'.toUpperCase(),
-            path: pathComponent + uritemplate('/listar_aplicantes').expand(apiGateway.core.utils.parseParametersToObject(params, [])),
-            headers: apiGateway.core.utils.parseParametersToObject(params, []),
-            queryParams: apiGateway.core.utils.parseParametersToObject(params, []),
-            body: body
-        };
-        
-        
-        return apiGatewayClient.makeRequest(listarAplicantesGetRequest, authType, additionalParams, config.apiKey);
-    };
-    
-    
     apigClient.listarBusquedasGet = function (params, body, additionalParams) {
         if(additionalParams === undefined) { additionalParams = {}; }
         
@@ -191,13 +173,31 @@ apigClientFactory.newClient = function (config) {
     };
     
     
-    apigClient.verBusquedaPost = function (params, body, additionalParams) {
+    apigClient.verAplicacionesGet = function (params, body, additionalParams) {
         if(additionalParams === undefined) { additionalParams = {}; }
         
         apiGateway.core.utils.assertParametersDefined(params, [], ['body']);
         
-        var verBusquedaPostRequest = {
-            verb: 'post'.toUpperCase(),
+        var verAplicacionesGetRequest = {
+            verb: 'get'.toUpperCase(),
+            path: pathComponent + uritemplate('/ver_aplicaciones').expand(apiGateway.core.utils.parseParametersToObject(params, [])),
+            headers: apiGateway.core.utils.parseParametersToObject(params, []),
+            queryParams: apiGateway.core.utils.parseParametersToObject(params, []),
+            body: body
+        };
+        
+        
+        return apiGatewayClient.makeRequest(verAplicacionesGetRequest, authType, additionalParams, config.apiKey);
+    };
+    
+    
+    apigClient.verBusquedaGet = function (params, body, additionalParams) {
+        if(additionalParams === undefined) { additionalParams = {}; }
+        
+        apiGateway.core.utils.assertParametersDefined(params, [], ['body']);
+        
+        var verBusquedaGetRequest = {
+            verb: 'get'.toUpperCase(),
             path: pathComponent + uritemplate('/ver_busqueda').expand(apiGateway.core.utils.parseParametersToObject(params, [])),
             headers: apiGateway.core.utils.parseParametersToObject(params, []),
             queryParams: apiGateway.core.utils.parseParametersToObject(params, []),
@@ -205,7 +205,7 @@ apigClientFactory.newClient = function (config) {
         };
         
         
-        return apiGatewayClient.makeRequest(verBusquedaPostRequest, authType, additionalParams, config.apiKey);
+        return apiGatewayClient.makeRequest(verBusquedaGetRequest, authType, additionalParams, config.apiKey);
     };
     
 

@@ -24,7 +24,26 @@ function getAplicaciones(id) {
             "Authorization": localStorage.getItem('idToken')
         }
     };
-    apigClient.listarAplicantesGet(params, body, additionalParams)
+    apigClient.verAplicacionesGet(params, body, additionalParams)
+        .then(function(result){
+            console.log('Success, payload', result); 
+        }).catch( function(result){
+            console.log('Error', result);
+        });
+}
+
+function getBusqueda(id) {
+    var params = {
+        id: id
+    };
+    var body = {
+    };
+    var additionalParams = {
+        headers: {
+            "Authorization": localStorage.getItem('idToken')
+        }
+    };
+    apigClient.verBusquedaGet(params, body, additionalParams)
         .then(function(result){
             console.log('Success, payload', result); 
         }).catch( function(result){
@@ -45,7 +64,25 @@ function nuevaBusqueda(title, description, username) {
             "Authorization": localStorage.getItem('idToken')
         }
     };
-    apigClient.listarAplicantesGet(params, body, additionalParams)
+    apigClient.crearBusquedaPost(params, body, additionalParams)
+        .then(function(result){
+            console.log('Success, payload', result); 
+        }).catch( function(result){
+            console.log('Error', result);
+        });
+}
+function nuevaAplicacion(id) {
+    var params = {
+        busqueda: id
+    };
+    var body = {
+    };
+    var additionalParams = {
+        headers: {
+            "Authorization": localStorage.getItem('idToken')
+        }
+    };
+    apigClient.crearBusquedaPost(params, body, additionalParams)
         .then(function(result){
             console.log('Success, payload', result); 
         }).catch( function(result){
