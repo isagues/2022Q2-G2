@@ -29,15 +29,25 @@
           <div class="col-md-8 col-lg-6 col-xl-4 offset-xl-1">
             <form>
               <div class="divider d-flex align-items-center my-4">
-                <h2 class="text-center fw-bold mx-3 mb-0">Búsqueda abierta</h2>
+                <h2 class="text-center fw-bold mx-3 mb-0">Aplicar a busqueda</h2>
               </div>
 
               <div id="job-search-data"></div>
 
-              <div id="qrcode"></div>
+              <form id="form" method=POST enctype=multipart/form-data>
+                <!-- upload of a single file -->
+                <p>
+                  <label>Cargar un CV: </label><br />
+                  <input type="file" id="cv" name="cv" accept="application/pdf" />
+                </p>
+                <p>
+                  <input type="submit" />
+                </p>
+              </form>
+
 
               <button id="apply-button" type="button" class="btn btn-primary btn-lg"
-                  style="padding-left: 2.5rem; padding-right: 2.5rem;">Aplicar</button>
+              style="padding-left: 2.5rem; padding-right: 2.5rem;">Aplicar</button>
     
             </form>
           </div>
@@ -54,9 +64,6 @@
     </section>
     <!-- Pills content -->
     <script defer src="scripts/constants.js"></script>
-    <script defer src="scripts/apigClient.js"></script>
-    <script defer src="scripts/endpoint-calls.js"></script>
-    <script defer src="scripts/cognito.js"></script>
-    <script defer src="scripts/job-search.js"></script>
+    <script defer src="scripts/apply.js"></script>
   </body>
 </html>

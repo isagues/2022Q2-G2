@@ -17,16 +17,9 @@ function signUpUser(username, password, email, phone_number) {
 		Value: email,
 	};
 
-	var dataPhoneNumber = {
-		Name: 'phone_number',
-		Value: phone_number,
-	};
-
 	var attributeEmail = new AmazonCognitoIdentity.CognitoUserAttribute(dataEmail);
-	var attributePhoneNumber = new AmazonCognitoIdentity.CognitoUserAttribute(dataPhoneNumber);
 
 	attributeList.push(attributeEmail);
-	attributeList.push(attributePhoneNumber);
 
 	userPool.signUp(username, password, attributeList, null, function(
 		err,
