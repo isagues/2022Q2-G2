@@ -91,7 +91,7 @@ function authenticateUser(username, password) {
 
 			console.log(result);
 			localStorage.setItem('idToken', idToken);
-			window.location.href = "job_searches.html";
+			window.location.href = "index.html";
 		},
 
 		onFailure: function (err) {
