@@ -10,15 +10,16 @@ exports.handler = async (event, context) => {
     "Content-Type": "application/json"
   };
   const queryParams = event.queryStringParameters;
+
   try {
     body = await dynamo.scan({
-      TableName : 'job_searchs',
-      AttributesToGet: [
-        'description'
-      ],
-      FilterExpression : 'id = :id',
-      ExpressionAttributeValues : {':this_id' : queryParams.id}
-    })
+        TableName : 'applications',
+        AttributesToGet: [
+          'cv_link'
+        ],
+        FilterExpression : 'search_id = :search_id',
+        ExpressionAttributeValues : {':this_id' : queryParams.search_id}
+      })
       .promise();
   } catch (err) {
     statusCode = 400;

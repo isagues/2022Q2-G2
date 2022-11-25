@@ -43,7 +43,8 @@ module "static_site" {
   bucket_access_OAI = [aws_cloudfront_origin_access_identity.cdn.iam_arn]
   constants =  {
     USER_POOL_ID: module.api_gateway.user_pool_id,
-    CLIENT_ID: module.api_gateway.client_pool_id
+    CLIENT_ID: module.api_gateway.client_pool_id,
+    BASE_URL: local.app_domain 
   }
 }
 
@@ -295,7 +296,7 @@ module "lambda_crear_busqueda" {
   }
 }
 
-module "dynamodb_table" {
+module "job_searchs_table" {
   source = "terraform-aws-modules/dynamodb-table/aws"
 
   name     = "job-searchs"
@@ -320,17 +321,45 @@ module "dynamodb_table" {
     projection_type    = "INCLUDE"
     non_key_attributes = ["id"]
   }]
+}
 
-  tags = {
-    Terraform   = "true"
-    Environment = "staging"
+  module "applications_table" {
+  source = "terraform-aws-modules/dynamodb-table/aws"
+
+  name     = "applications"
+  hash_key = "id"
+
+  attributes = [
+    {
+      name = "id"
+      type = "N"
+    }
+    , {
+      name = "search_id"
+      type = "N"
+    }
+    , {
+      name = "cv_link"
+      type = "S"
+    }
+  ]
+
+  global_secondary_indexes = [{
+    name               = "SearchIdIndex"
+    hash_key           = "search_id"
+    write_capacity     = 10
+    read_capacity      = 10
+    projection_type    = "INCLUDE"
+    non_key_attributes = ["id", "cv_link"]
+  },
+  {
+    name               = "CvLinkIndex"
+    hash_key           = "cv_link"
+    write_capacity     = 10
+    read_capacity      = 10
+    projection_type    = "INCLUDE"
+    non_key_attributes = ["id", "search_id"]
   }
-}
-
-locals {
-  map = {"CONST1": "AAA", "CONSTB": "BBB"}
-}
-
-output "AAAA" {
-  value = join("\n", [for k,v in local.map : "const ${k} = ${v};"])
+  ]
+  
 }
