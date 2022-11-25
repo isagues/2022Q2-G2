@@ -55,6 +55,17 @@ resource "aws_cloudfront_distribution" "this" {
 
     forwarded_values {
       query_string = true
+      headers = ["Accept-Charset"
+        ,"Authorization"
+        ,"Origin"
+        ,"Accept"
+        ,"Access-Control-Request-Method"
+        ,"Access-Control-Request-Header"
+        ,"Referer"
+        ,"Accept-Language"
+        ,"Accept-Encoding"
+        ,"Accept-Datetime"
+        ]
       cookies {
         forward = "none"
       }
