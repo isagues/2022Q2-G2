@@ -9,13 +9,14 @@ exports.handler = async (event, context) => {
   const headers = {
     "Content-Type": "application/json"
   };
-  const queryParams = event.queryStringParameters;
   try {
-    body = await dynamo.get({
+    body = await dynamo.query({
       TableName : 'job-searchs',
-      Key: {
-        id: Number(queryParams.id),
-        aplication: 'metadata'
+      KeyConditions : {
+        'application' : {
+          ComparisonOperator: BEGINS_WITH,
+          AttributeValueList: ["application#"]
+        }
       }
     })
       .promise();
