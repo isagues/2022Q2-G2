@@ -96,6 +96,7 @@ module "api_gateway" {
     module.sns_lambda.lambda_rest_configuration_hash, 
     module.lambda_crear_busqueda.lambda_rest_configuration_hash,
     module.lambda_ver_busqueda.lambda_rest_configuration_hash,
+    module.lambda_ver_aplicaciones.lambda_rest_configuration_hash,
     ]
 }
 data "aws_iam_role" "this" {
@@ -228,6 +229,37 @@ module "lambda_listar_busquedas" {
   security_groups = [aws_security_group.lambda.id]
   tags = {
     Name = "ListarBusquedas Lambda"
+  }
+}
+
+module "lambda_ver_aplicaciones" {
+  source = "./modules/lambda"
+
+  function_name = "ver_aplicaciones"
+  filename      = "./lambda/ver_aplicaciones.zip"
+  handler       = "ver_aplicaciones.handler"
+  runtime       = "nodejs12.x"
+
+  base_domain    = var.base_domain
+  aws_account_id = local.aws_account_id
+  aws_region     = var.aws_region
+  ssm_endpoint   = module.vpc.ssm_endpoint 
+
+  gateway_id          = module.api_gateway.id
+  gateway_authorizer_id = module.api_gateway.gateway_authorizer_id
+  gateway_resource_id = module.api_gateway.resource_id
+  execution_arn       = module.api_gateway.execution_arm
+
+  path_part   = "ver_aplicaciones"
+  http_method = "GET"
+  status_code = "200"
+
+  subnet_ids      = module.vpc.private_subnets_ids
+  vpc_id          = module.vpc.vpc_id
+  role            = data.aws_iam_role.this.arn
+  security_groups = [aws_security_group.lambda.id]
+  tags = {
+    Name = "VerAplicaciones Lambda"
   }
 }
 
