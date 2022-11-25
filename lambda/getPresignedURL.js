@@ -1,15 +1,31 @@
 const AWS = require("aws-sdk");
+const crypto = require('crypto');
+const dynamo = new AWS.DynamoDB.DocumentClient();
+const s3 = new AWS.S3({});
+
 
 exports.handler = async (event, context) => {
   
-  const s3 = new AWS.S3({});
-
   const queryParams = event.queryStringParameters;
-  console.log(queryParams);
+  const idBusqueda = event.queryStringParameters.busqueda;
+
+  const ssm = new AWS.SSM({endpoint: process.env.ssm_endpoint});
+  const cvvBucket = (await ssm.getParameter({ Name: '/s3/cvs/bucketName' }).promise()).Parameter.Value;
   
+  const applicationID = `application#${crypto.randomBytes(20).toString('hex')}`;
+  const file_name = `busqueda#${idBusqueda};${applicationID}.pdf`;
+  
+ await dynamo.put({
+   TableName: "job-searchs",
+        Item: {
+          id: parseInt(idBusqueda),
+          application: applicationID
+        }
+      }).promise();
+
   const URL = await s3.getSignedUrlPromise('putObject', {
-    "Bucket": 'cvs-precise-ringtail',
-    "Key": queryParams.fname,
+    "Bucket": cvvBucket,
+    "Key": file_name,
     "ContentType": 'application/pdf'
   });
   

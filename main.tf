@@ -143,9 +143,9 @@ module "getPresignedURL_lambda" {
   source = "./modules/lambda"
 
   function_name = "getPresignedURL"
-  filename      = "./lambda/getPresignedURL.zip"
+  filename      = "./lambda/getPresignedURL.js"
   handler       = "getPresignedURL.handler"
-  runtime       = "nodejs12.x"
+  runtime       = "nodejs16.x"
 
   base_domain    = var.base_domain
   aws_account_id = local.aws_account_id
@@ -174,9 +174,9 @@ module "lambda" {
   source = "./modules/lambda"
 
   function_name = "test"
-  filename      = "./lambda/test.zip"
+  filename      = "./lambda/test.js"
   handler       = "test.handler"
-  runtime       = "nodejs12.x"
+  runtime       = "nodejs16.x"
 
   base_domain    = var.base_domain
   aws_account_id = local.aws_account_id
@@ -205,9 +205,9 @@ module "lambda_listar_busquedas" {
   source = "./modules/lambda"
 
   function_name = "listar_busquedas"
-  filename      = "./lambda/listar_busquedas.zip"
+  filename      = "./lambda/listar_busquedas.js"
   handler       = "listar_busquedas.handler"
-  runtime       = "nodejs12.x"
+  runtime       = "nodejs16.x"
 
   base_domain    = var.base_domain
   aws_account_id = local.aws_account_id
@@ -267,9 +267,9 @@ module "sns_lambda" {
   source = "./modules/lambda"
 
   function_name = "sns"
-  filename      = "./lambda/sns.zip"
+  filename      = "./lambda/sns.js"
   handler       = "sns.handler"
-  runtime       = "nodejs12.x"
+  runtime       = "nodejs16.x"
 
   base_domain    = var.base_domain
   aws_account_id = local.aws_account_id
@@ -298,9 +298,9 @@ module "lambda_crear_busqueda" {
   source = "./modules/lambda"
 
   function_name = "crear_busqueda"
-  filename      = "./lambda/crear_busqueda.zip"
+  filename      = "./lambda/crear_busqueda.js"
   handler       = "crear_busqueda.handler"
-  runtime       = "nodejs12.x"
+  runtime       = "nodejs16.x"
 
   base_domain    = var.base_domain
   aws_account_id = local.aws_account_id

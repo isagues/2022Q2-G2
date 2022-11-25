@@ -19,6 +19,12 @@ data "aws_iam_policy_document" "this" {
 }
 
 
+resource "aws_ssm_parameter" "s3_cvs" {
+  name  = "/s3/cvs/bucketName"
+  type  = "String"
+  value = local.bucket_name
+}
+
 module "cvs" {
   source = "terraform-aws-modules/s3-bucket/aws"
 

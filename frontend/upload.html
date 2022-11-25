@@ -11,7 +11,7 @@
 
       async function sendIT() {
         const url = new URL("/api/getPresignedURL", document.baseURI);
-        url.searchParams.append("fname", cv.files[0].name)
+        url.searchParams.append("busqueda", 0)
 
         const URLresponse = await fetch(url, {
           method: 'POST',

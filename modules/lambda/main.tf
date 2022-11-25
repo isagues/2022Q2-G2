@@ -1,10 +1,16 @@
+data "archive_file" "this" {
+  type        = "zip"
+  source_file = var.filename
+  output_path = "${var.filename}.zip"
+}
+
 resource "aws_lambda_function" "this" {
-  filename = var.filename
+  filename = "${var.filename}.zip"
 
   function_name    = var.function_name
   role             = var.role
   handler          = var.handler
-  source_code_hash = filebase64sha256(var.filename)
+  source_code_hash = filebase64sha256("${var.filename}.zip")
 
   runtime = var.runtime
 
@@ -20,6 +26,10 @@ resource "aws_lambda_function" "this" {
   }
 
   tags = var.tags
+
+  depends_on = [
+    data.archive_file.this
+  ]
 }
 
 # LAMBDA INVOCATION PERMISSION
