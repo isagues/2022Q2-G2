@@ -92,13 +92,12 @@ module "api_gateway" {
   lambda_hashes = [
     module.getPresignedURL_lambda.lambda_rest_configuration_hash, 
     module.lambda.lambda_rest_configuration_hash, 
-    module.lambda_busquedas.lambda_rest_configuration_hash, 
+    module.lambda_listar_busquedas.lambda_rest_configuration_hash, 
     module.sns_lambda.lambda_rest_configuration_hash, 
     module.lambda_crear_busqueda.lambda_rest_configuration_hash,
+    module.lambda_ver_busqueda.lambda_rest_configuration_hash,
     ]
-
 }
-
 data "aws_iam_role" "this" {
   name = "LabRole"
 }
@@ -139,8 +138,6 @@ resource "aws_security_group_rule" "https_in" {
   security_group_id = aws_security_group.lambda.id
 }
 
-
-
 module "getPresignedURL_lambda" {
   source = "./modules/lambda"
 
@@ -155,7 +152,7 @@ module "getPresignedURL_lambda" {
   ssm_endpoint   = module.vpc.ssm_endpoint 
 
   gateway_id          = module.api_gateway.id
-  gateway_authoriser_id = module.api_gateway.gateway_authoriser_id
+  gateway_authorizer_id = module.api_gateway.gateway_authorizer_id
   gateway_resource_id = module.api_gateway.resource_id
   execution_arn       = module.api_gateway.execution_arm
 
@@ -186,7 +183,7 @@ module "lambda" {
   ssm_endpoint   = module.vpc.ssm_endpoint 
 
   gateway_id          = module.api_gateway.id
-  gateway_authoriser_id = module.api_gateway.gateway_authoriser_id
+  gateway_authorizer_id = module.api_gateway.gateway_authorizer_id
   gateway_resource_id = module.api_gateway.resource_id
   execution_arn       = module.api_gateway.execution_arm
 
@@ -203,7 +200,7 @@ module "lambda" {
   }
 }
 
-module "lambda_busquedas" {
+module "lambda_listar_busquedas" {
   source = "./modules/lambda"
 
   function_name = "listar_busquedas"
@@ -217,7 +214,7 @@ module "lambda_busquedas" {
   ssm_endpoint   = module.vpc.ssm_endpoint 
 
   gateway_id          = module.api_gateway.id
-  gateway_authoriser_id = module.api_gateway.gateway_authoriser_id
+  gateway_authorizer_id = module.api_gateway.gateway_authorizer_id
   gateway_resource_id = module.api_gateway.resource_id
   execution_arn       = module.api_gateway.execution_arm
 
@@ -248,7 +245,7 @@ module "sns_lambda" {
   ssm_endpoint   = module.vpc.ssm_endpoint 
 
   gateway_id          = module.api_gateway.id
-  gateway_authoriser_id = module.api_gateway.gateway_authoriser_id
+  gateway_authorizer_id = module.api_gateway.gateway_authorizer_id
   gateway_resource_id = module.api_gateway.resource_id
   execution_arn       = module.api_gateway.execution_arm
 
@@ -279,7 +276,7 @@ module "lambda_crear_busqueda" {
   ssm_endpoint   = module.vpc.ssm_endpoint 
 
   gateway_id          = module.api_gateway.id
-  gateway_authoriser_id = module.api_gateway.gateway_authoriser_id
+  gateway_authorizer_id = module.api_gateway.gateway_authorizer_id
   gateway_resource_id = module.api_gateway.resource_id
   execution_arn       = module.api_gateway.execution_arm
 
@@ -295,71 +292,52 @@ module "lambda_crear_busqueda" {
     Name = "CrearBusqueda Lambda"
   }
 }
+module "lambda_ver_busqueda" {
+  source = "./modules/lambda"
+
+  function_name = "ver_busqueda"
+  filename      = "./lambda/ver_busqueda.zip"
+  handler       = "ver_busqueda.handler"
+  runtime       = "nodejs12.x"
+
+  base_domain    = var.base_domain
+  aws_account_id = local.aws_account_id
+  aws_region     = var.aws_region
+  ssm_endpoint   = module.vpc.ssm_endpoint 
+
+  gateway_id          = module.api_gateway.id
+  gateway_authorizer_id = module.api_gateway.gateway_authorizer_id
+  gateway_resource_id = module.api_gateway.resource_id
+  execution_arn       = module.api_gateway.execution_arm
+
+  path_part   = "ver_busqueda"
+  http_method = "GET"
+  status_code = "200"
+
+  subnet_ids      = module.vpc.private_subnets_ids
+  vpc_id          = module.vpc.vpc_id
+  role            = data.aws_iam_role.this.arn
+  security_groups = [aws_security_group.lambda.id]
+  tags = {
+    Name = "VerBusqueda Lambda"
+  }
+}
 
 module "job_searchs_table" {
   source = "terraform-aws-modules/dynamodb-table/aws"
 
   name     = "job-searchs"
   hash_key = "id"
+  range_key = "aplication"
 
   attributes = [
     {
       name = "id"
       type = "N"
-    }
-    , {
-      name = "description"
-      type = "S"
-    }
-  ]
-
-  global_secondary_indexes = [{
-    name               = "DescriptionIndex"
-    hash_key           = "description"
-    write_capacity     = 10
-    read_capacity      = 10
-    projection_type    = "INCLUDE"
-    non_key_attributes = ["id"]
-  }]
-}
-
-  module "applications_table" {
-  source = "terraform-aws-modules/dynamodb-table/aws"
-
-  name     = "applications"
-  hash_key = "id"
-
-  attributes = [
+    },
     {
-      name = "id"
-      type = "N"
-    }
-    , {
-      name = "search_id"
-      type = "N"
-    }
-    , {
-      name = "cv_link"
+      name = "aplication"
       type = "S"
     }
   ]
-
-  global_secondary_indexes = [{
-    name               = "SearchIdIndex"
-    hash_key           = "search_id"
-    write_capacity     = 10
-    read_capacity      = 10
-    projection_type    = "INCLUDE"
-    non_key_attributes = ["id", "cv_link"]
-  },
-  {
-    name               = "CvLinkIndex"
-    hash_key           = "cv_link"
-    write_capacity     = 10
-    read_capacity      = 10
-    projection_type    = "INCLUDE"
-    non_key_attributes = ["id", "search_id"]
-  }
-  ]
-  
 }

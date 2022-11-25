@@ -3,7 +3,7 @@ const AWS = require("aws-sdk");
 const dynamo = new AWS.DynamoDB.DocumentClient();
 
 function generateUniqueId() { // Public Domain/MIT
-  return Date.now() + Math.random()
+  return Date.now()
 }
 
 exports.handler = async (event, context) => {
@@ -12,16 +12,17 @@ exports.handler = async (event, context) => {
   const headers = {
     "Content-Type": "application/json"
   };
+  const queryParams = event.queryStringParameters;
 
   try {
-    // let unique_id = ()
-    // console.log(unique_id)
     await dynamo.put({
         TableName: "job-searchs",
         Item: {
           id: generateUniqueId(),
-          title: event.data.title,
-          description: event.data.description
+          aplication: "metadata",
+          title: queryParams.title,
+          description: queryParams.description,
+          username: queryParams.username
         }
       })
       .promise();

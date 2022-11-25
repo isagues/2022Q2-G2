@@ -11,13 +11,12 @@ exports.handler = async (event, context) => {
   };
   const queryParams = event.queryStringParameters;
   try {
-    body = await dynamo.scan({
-      TableName : 'job_searchs',
-      AttributesToGet: [
-        'description'
-      ],
-      FilterExpression : 'id = :id',
-      ExpressionAttributeValues : {':this_id' : queryParams.id}
+    body = await dynamo.get({
+      TableName : 'job-searchs',
+      Key: {
+        id: Number(queryParams.id),
+        aplication: queryParams.aplication
+      }
     })
       .promise();
   } catch (err) {

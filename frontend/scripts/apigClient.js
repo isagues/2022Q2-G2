@@ -83,6 +83,60 @@ apigClientFactory.newClient = function (config) {
     
     
     
+    apigClient.crearBusquedaPost = function (params, body, additionalParams) {
+        if(additionalParams === undefined) { additionalParams = {}; }
+        
+        apiGateway.core.utils.assertParametersDefined(params, [], ['body']);
+        
+        var crearBusquedaPostRequest = {
+            verb: 'post'.toUpperCase(),
+            path: pathComponent + uritemplate('/crear_busqueda').expand(apiGateway.core.utils.parseParametersToObject(params, [])),
+            headers: apiGateway.core.utils.parseParametersToObject(params, []),
+            queryParams: apiGateway.core.utils.parseParametersToObject(params, []),
+            body: body
+        };
+        
+        
+        return apiGatewayClient.makeRequest(crearBusquedaPostRequest, authType, additionalParams, config.apiKey);
+    };
+    
+    
+    apigClient.getPresignedURLPost = function (params, body, additionalParams) {
+        if(additionalParams === undefined) { additionalParams = {}; }
+        
+        apiGateway.core.utils.assertParametersDefined(params, [], ['body']);
+        
+        var getPresignedURLPostRequest = {
+            verb: 'post'.toUpperCase(),
+            path: pathComponent + uritemplate('/getPresignedURL').expand(apiGateway.core.utils.parseParametersToObject(params, [])),
+            headers: apiGateway.core.utils.parseParametersToObject(params, []),
+            queryParams: apiGateway.core.utils.parseParametersToObject(params, []),
+            body: body
+        };
+        
+        
+        return apiGatewayClient.makeRequest(getPresignedURLPostRequest, authType, additionalParams, config.apiKey);
+    };
+    
+    
+    apigClient.listarAplicantesGet = function (params, body, additionalParams) {
+        if(additionalParams === undefined) { additionalParams = {}; }
+        
+        apiGateway.core.utils.assertParametersDefined(params, [], ['body']);
+        
+        var listarAplicantesGetRequest = {
+            verb: 'get'.toUpperCase(),
+            path: pathComponent + uritemplate('/listar_aplicantes').expand(apiGateway.core.utils.parseParametersToObject(params, [])),
+            headers: apiGateway.core.utils.parseParametersToObject(params, []),
+            queryParams: apiGateway.core.utils.parseParametersToObject(params, []),
+            body: body
+        };
+        
+        
+        return apiGatewayClient.makeRequest(listarAplicantesGetRequest, authType, additionalParams, config.apiKey);
+    };
+    
+    
     apigClient.listarBusquedasGet = function (params, body, additionalParams) {
         if(additionalParams === undefined) { additionalParams = {}; }
         
@@ -101,6 +155,24 @@ apigClientFactory.newClient = function (config) {
     };
     
     
+    apigClient.snsGet = function (params, body, additionalParams) {
+        if(additionalParams === undefined) { additionalParams = {}; }
+        
+        apiGateway.core.utils.assertParametersDefined(params, [], ['body']);
+        
+        var snsGetRequest = {
+            verb: 'get'.toUpperCase(),
+            path: pathComponent + uritemplate('/sns').expand(apiGateway.core.utils.parseParametersToObject(params, [])),
+            headers: apiGateway.core.utils.parseParametersToObject(params, []),
+            queryParams: apiGateway.core.utils.parseParametersToObject(params, []),
+            body: body
+        };
+        
+        
+        return apiGatewayClient.makeRequest(snsGetRequest, authType, additionalParams, config.apiKey);
+    };
+    
+    
     apigClient.testGet = function (params, body, additionalParams) {
         if(additionalParams === undefined) { additionalParams = {}; }
         
@@ -116,6 +188,24 @@ apigClientFactory.newClient = function (config) {
         
         
         return apiGatewayClient.makeRequest(testGetRequest, authType, additionalParams, config.apiKey);
+    };
+    
+    
+    apigClient.verBusquedaPost = function (params, body, additionalParams) {
+        if(additionalParams === undefined) { additionalParams = {}; }
+        
+        apiGateway.core.utils.assertParametersDefined(params, [], ['body']);
+        
+        var verBusquedaPostRequest = {
+            verb: 'post'.toUpperCase(),
+            path: pathComponent + uritemplate('/ver_busqueda').expand(apiGateway.core.utils.parseParametersToObject(params, [])),
+            headers: apiGateway.core.utils.parseParametersToObject(params, []),
+            queryParams: apiGateway.core.utils.parseParametersToObject(params, []),
+            body: body
+        };
+        
+        
+        return apiGatewayClient.makeRequest(verBusquedaPostRequest, authType, additionalParams, config.apiKey);
     };
     
 

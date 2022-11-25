@@ -49,7 +49,7 @@ module "all_lambdas_errors_alarm" {
 module "alarm" {
   source = "terraform-aws-modules/cloudwatch/aws//modules/metric-alarm"
 
-  alarm_name          = "lambda-duration-${module.lambda_busquedas.function_name}"
+  alarm_name          = "lambda-duration-${module.lambda_listar_busquedas.function_name}"
   alarm_description   = "Lambda duration is too high"
   comparison_operator = "GreaterThanOrEqualToThreshold"
   evaluation_periods  = 1
@@ -71,7 +71,7 @@ module "alarm" {
 module "alarm_metric_query" {
   source = "terraform-aws-modules/cloudwatch/aws//modules/metric-alarm"
 
-  alarm_name          = "mq-lambda-duration-${module.lambda_busquedas.function_name}"
+  alarm_name          = "mq-lambda-duration-${module.lambda_listar_busquedas.function_name}"
   alarm_description   = "Lambda error rate is too high"
   comparison_operator = "GreaterThanOrEqualToThreshold"
   evaluation_periods  = 1
@@ -94,7 +94,7 @@ module "alarm_metric_query" {
       unit        = "Count"
 
       dimensions = {
-        FunctionName = module.lambda_busquedas.function_name
+        FunctionName = module.lambda_listar_busquedas.function_name
       }
     }]
     }, {
@@ -108,7 +108,7 @@ module "alarm_metric_query" {
       unit        = "Count"
 
       dimensions = {
-        FunctionName = module.lambda_busquedas.function_name
+        FunctionName = module.lambda_listar_busquedas.function_name
       }
     }]
   }]
@@ -119,7 +119,7 @@ module "alarm_metric_query" {
 module "alarm_anomaly" {
   source = "terraform-aws-modules/cloudwatch/aws//modules/metric-alarm"
 
-  alarm_name          = "lambda-invocations-anomaly-${module.lambda_busquedas.function_name}"
+  alarm_name          = "lambda-invocations-anomaly-${module.lambda_listar_busquedas.function_name}"
   alarm_description   = "Lambda invocations anomaly"
   comparison_operator = "LessThanLowerOrGreaterThanUpperThreshold"
   evaluation_periods  = 1
@@ -144,7 +144,7 @@ module "alarm_anomaly" {
         unit        = "Count"
 
         dimensions = {
-          FunctionName = module.lambda_busquedas.function_name
+          FunctionName = module.lambda_listar_busquedas.function_name
         }
       }]
       return_data = "true"
