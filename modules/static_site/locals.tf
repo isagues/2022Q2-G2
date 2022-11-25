@@ -17,4 +17,7 @@ locals {
       }
     ]
   ])
+
+  constants = join("\n", [for k,v in var.constants : "const ${k} = '${v}';"])
+  
 }

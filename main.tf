@@ -41,6 +41,10 @@ module "static_site" {
 
   src               = local.static_resources
   bucket_access_OAI = [aws_cloudfront_origin_access_identity.cdn.iam_arn]
+  constants =  {
+    USER_POOL_ID: module.api_gateway.user_pool_id,
+    CLIENT_ID: module.api_gateway.client_pool_id
+  }
 }
 
 module "cdn" {
@@ -81,6 +85,7 @@ module "api_gateway" {
   source = "./modules/api_gateway"
 
   aws_region = var.aws_region
+  cognito_user_pool_name = "authUserPool"
 
 
   lambda_hashes = [

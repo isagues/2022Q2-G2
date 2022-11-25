@@ -37,12 +37,24 @@ resource "aws_api_gateway_stage" "api" {
   stage_name    = "api"
 }
 
-resource "aws_api_gateway_authorizer" "api_authorizer" {
-  name                   = "APIAuthorizer"
-  rest_api_id            = aws_api_gateway_rest_api.this.id
-  type                   = "COGNITO_USER_POOLS"
-  provider_arns          = ["arn:aws:cognito-idp:us-east-1:060674585647:userpool/us-east-1_rQcYJzVw5"]
+
+resource "aws_cognito_user_pool" "pool" {
+  name = "TiraCVUsers"
+  auto_verified_attributes = ["email"]
+  # email_sending_account = "COGNITO_DEFAULT"
 }
 
+resource "aws_api_gateway_authorizer" "api_authorizer" {
+  name                   = "CognitoUserPoolAuthorizer"
+  type                   = "COGNITO_USER_POOLS"
+  rest_api_id            = aws_api_gateway_rest_api.this.id
+  provider_arns          = [aws_cognito_user_pool.pool.arn]
+}
+
+resource "aws_cognito_user_pool_client" "client" {
+  name = "tiraCvClient"
+
+  user_pool_id = aws_cognito_user_pool.pool.id
+}
 
 
