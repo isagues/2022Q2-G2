@@ -103,6 +103,7 @@ function authenticateUser() {
 			// });
 			console.log(accessToken.getJwtToken());
 			localStorage.setItem('idToken', idToken);
+			window.location.href = "job_searches.html";
 			
 			//refreshes credentials using AWS.CognitoIdentity.getCredentialsForIdentity()
 			// AWS.config.credentials.refresh(error => {

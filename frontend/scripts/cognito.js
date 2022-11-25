@@ -1,0 +1,76 @@
+// const USER_POOL_ID = 'us-east-1_rQcYJzVw5';
+// const CLIENT_ID = '1e3fhulu7k2bp2md70ufmnains';
+
+var apigClient = apigClientFactory.newClient();
+
+function signUpUser(username, password, email, phone_number) {
+	var poolData = {
+		UserPoolId: USER_POOL_ID,
+		ClientId:  CLIENT_ID
+	};
+	var userPool = new AmazonCognitoIdentity.CognitoUserPool(poolData);
+
+	var attributeList = [];
+
+	var dataEmail = {
+		Name: 'email',
+		Value: email,
+	};
+
+	var dataPhoneNumber = {
+		Name: 'phone_number',
+		Value: phone_number,
+	};
+
+	var attributeEmail = new AmazonCognitoIdentity.CognitoUserAttribute(dataEmail);
+	var attributePhoneNumber = new AmazonCognitoIdentity.CognitoUserAttribute(dataPhoneNumber);
+
+	attributeList.push(attributeEmail);
+	attributeList.push(attributePhoneNumber);
+
+	userPool.signUp(username, password, attributeList, null, function(
+		err,
+		result
+	) {
+		if (err) {
+			alert(err.message || JSON.stringify(err));
+			return;
+		}
+		var cognitoUser = result.user;
+		console.log('user name is ' + cognitoUser.getUsername());
+	});
+}
+
+function authenticateUser(username, password) {
+	var authenticationData = {
+		Username: username,
+		Password: password,
+	};
+	var authenticationDetails = new AmazonCognitoIdentity.AuthenticationDetails(
+		authenticationData
+	);
+	var poolData = {
+		UserPoolId: USER_POOL_ID, // Your user pool id here
+		ClientId: CLIENT_ID, // Your client id here
+	};
+	var userPool = new AmazonCognitoIdentity.CognitoUserPool(poolData);
+	var userData = {
+		Username: username,
+		Pool: userPool,
+	};
+	var cognitoUser = new AmazonCognitoIdentity.CognitoUser(userData);
+	cognitoUser.authenticateUser(authenticationDetails, {
+		onSuccess: function (result) {
+			var accessToken = result.getAccessToken();
+			var idToken = result.getIdToken().getJwtToken();
+
+			console.log(result);
+			localStorage.setItem('idToken', idToken);
+			window.location.href = "job_searches.html";
+		},
+
+		onFailure: function (err) {
+			alert(err.message || JSON.stringify(err));
+		},
+	});
+}

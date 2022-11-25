@@ -1,6 +1,6 @@
 var apigClient = apigClientFactory.newClient();
 
-function getBusquedas() {
+async function getBusquedas() {
     var params = {
         // //This is where any header, path, or querystring request params go. The key is the parameter named as defined in the API
         // param0: '',
@@ -19,12 +19,7 @@ function getBusquedas() {
         //     param1: ''
         // }
     };
-    apigClient.listarBusquedasGet(params, body, additionalParams)
-        .then(function(result){
-            console.log('Success, payload', result); 
-        }).catch( function(result){
-            console.log('Error', result);
-        });
+    return apigClient.listarBusquedasGet(params, body, additionalParams);
 }
 const listButton = document.getElementById('list-endpoint');
 listButton.onclick = getBusquedas;
