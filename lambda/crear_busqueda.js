@@ -19,7 +19,7 @@ exports.handler = async (event, context) => {
         TableName: "job-searchs",
         Item: {
           id: generateUniqueId(),
-          aplication: "metadata",
+          application: "metadata",
           title: queryParams.title,
           description: queryParams.description,
           username: queryParams.username

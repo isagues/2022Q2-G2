@@ -15,7 +15,7 @@ exports.handler = async (event, context) => {
       TableName : 'job-searchs',
       Key: {
         id: Number(queryParams.id),
-        aplication: 'metadata'
+        application: 'metadata'
       }
     })
       .promise();
