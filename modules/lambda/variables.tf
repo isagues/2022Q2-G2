@@ -67,8 +67,8 @@ variable "gateway_id" {
   type        = string
 }
 
-variable "gateway_authoriser_id" {
-  description = "The api gateway authoriser id"
+variable "gateway_authorizer_id" {
+  description = "The api gateway authorizer id"
   type        = string
 }
 

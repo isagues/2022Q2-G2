@@ -8,7 +8,7 @@ output "id" {
   value       = aws_api_gateway_rest_api.this.id
 }
 
-output "gateway_authoriser_id" {
+output "gateway_authorizer_id" {
   description = "The api gateway authorizer id"
   value       = aws_api_gateway_authorizer.api_authorizer.id
 }
