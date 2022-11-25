@@ -38,6 +38,31 @@ function signUpUser(username, password, email, phone_number) {
 		}
 		var cognitoUser = result.user;
 		console.log('user name is ' + cognitoUser.getUsername());
+		console.log(result);
+		window.location.href = "confirm.html";
+	});
+}
+
+function confirmUser(username, confirmationCode) { 
+	var poolData = {
+		UserPoolId: USER_POOL_ID, // Your user pool id here
+		ClientId: CLIENT_ID, // Your client id here
+	};
+	var userPool = new AmazonCognitoIdentity.CognitoUserPool(poolData);
+	var userData = {
+		Username: username,
+		Pool: userPool,
+	};
+	
+	var cognitoUser = new AmazonCognitoIdentity.CognitoUser(userData);
+	cognitoUser.confirmRegistration(confirmationCode, true, function(err, result) {
+		if (err) {
+			console.log(err);
+			alert(err.message || JSON.stringify(err));
+			return;
+		}
+		console.log(result);
+		window.location.href = "login.html";
 	});
 }
 
