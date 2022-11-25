@@ -70,6 +70,7 @@ variable "gateway_id" {
 variable "gateway_authorizer_id" {
   description = "The api gateway authorizer id"
   type        = string
+  default     = "NONE"
 }
 
 variable "gateway_resource_id" {

@@ -153,7 +153,7 @@ module "getPresignedURL_lambda" {
   ssm_endpoint   = module.vpc.ssm_endpoint 
 
   gateway_id          = module.api_gateway.id
-  gateway_authorizer_id = module.api_gateway.gateway_authorizer_id
+  # gateway_authorizer_id = module.api_gateway.gateway_authorizer_id
   gateway_resource_id = module.api_gateway.resource_id
   execution_arn       = module.api_gateway.execution_arm
 
@@ -360,7 +360,7 @@ module "job_searchs_table" {
 
   name     = "job-searchs"
   hash_key = "id"
-  range_key = "aplication"
+  range_key = "application"
 
   attributes = [
     {
@@ -368,7 +368,7 @@ module "job_searchs_table" {
       type = "N"
     },
     {
-      name = "aplication"
+      name = "application"
       type = "S"
     }
   ]
