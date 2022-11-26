@@ -1,36 +1,13 @@
-data "archive_file" "this" {
-  type        = "zip"
-  source_file = var.filename
-  output_path = "${var.filename}.zip"
+module "lambda" {
+  source = "../bare_lambda"
+  
+  function_name   = var.function_name
+  subnet_ids      = var.subnet_ids
+  role            = var.role
+  security_groups = var.security_groups
+  ssm_endpoint    = var.ssm_endpoint
 }
 
-resource "aws_lambda_function" "this" {
-  filename = "${var.filename}.zip"
-
-  function_name    = var.function_name
-  role             = var.role
-  handler          = var.handler
-  source_code_hash = filebase64sha256("${var.filename}.zip")
-
-  runtime = var.runtime
-
-  vpc_config {
-    subnet_ids         = var.subnet_ids
-    security_group_ids = var.security_groups
-  }
-
-  environment {
-    variables = {
-      ssm_endpoint = var.ssm_endpoint
-    }
-  }
-
-  tags = var.tags
-
-  depends_on = [
-    data.archive_file.this
-  ]
-}
 
 # LAMBDA INVOCATION PERMISSION
 resource "aws_lambda_permission" "apigw_lambda" {
@@ -39,10 +16,10 @@ resource "aws_lambda_permission" "apigw_lambda" {
   function_name = var.function_name
   principal     = "apigateway.amazonaws.com"
 
-  # source_arn = "arn:aws:execute-api:${var.aws_region}:${var.aws_account_id}:${var.gateway_id}/*/${aws_api_gateway_method.this.http_method}${aws_api_gateway_resource.this.path}"
-  source_arn = "${var.execution_arn}/*/*/*"
+  source_arn = "${var.execution_arn}/*/${aws_api_gateway_method.this.http_method}${aws_api_gateway_resource.this.path}"
+  
   depends_on = [
-    aws_lambda_function.this
+    module.lambda
   ]
 }
 
@@ -63,18 +40,18 @@ resource "aws_api_gateway_method" "this" {
 }
 
 # PATH /test - Definir la lambda
-resource "aws_api_gateway_integration" "lambda_response" {
+resource "aws_api_gateway_integration" "this" {
   rest_api_id             = var.gateway_id
   resource_id             = aws_api_gateway_resource.this.id
   http_method             = aws_api_gateway_method.this.http_method
   integration_http_method = "POST" //Lambdas solo pueden ser accedidas por POST
   type                    = "AWS_PROXY"
-  uri                     = aws_lambda_function.this.invoke_arn
+  uri                     = module.lambda.invoke_arn
 }
 
 
 # PATH /path 200 RESPONSE
-resource "aws_api_gateway_method_response" "response" {
+resource "aws_api_gateway_method_response" "this" {
   rest_api_id = var.gateway_id
   resource_id = aws_api_gateway_resource.this.id
   http_method = aws_api_gateway_method.this.http_method
@@ -82,13 +59,13 @@ resource "aws_api_gateway_method_response" "response" {
 }
 
 # PATH /path - GET method - 200 RESPONSE INTEGRATION
-resource "aws_api_gateway_integration_response" "lambda_response" {
+resource "aws_api_gateway_integration_response" "this" {
   rest_api_id = var.gateway_id
   resource_id = aws_api_gateway_resource.this.id
   http_method = aws_api_gateway_method.this.http_method
-  status_code = aws_api_gateway_method_response.response.status_code
+  status_code = aws_api_gateway_method_response.this.status_code
 
   depends_on = [
-    aws_api_gateway_integration.lambda_response
+    aws_api_gateway_integration.this
   ]
 }

@@ -48,16 +48,6 @@ variable "base_domain" {
   type        = string
 }
 
-variable "aws_account_id" {
-  description = "The aws account id"
-  type        = string
-}
-
-variable "aws_region" {
-  description = "The aws region"
-  type        = string
-}
-
 variable "ssm_endpoint" {
   type        = string
 }
