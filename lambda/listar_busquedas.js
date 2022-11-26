@@ -11,7 +11,11 @@ exports.handler = async (event, context) => {
 
   try {
     body = await dynamo.scan({
-        TableName: "job-searchs"
+        TableName: "job-searchs",
+        FilterExpression : "application = :metadata",
+        ExpressionAttributeValues: {
+          ":metadata" : "metadata"
+        } 
       })
       .promise();
   } catch (err) {
