@@ -90,11 +90,11 @@ function nuevaAplicacion(id) {
         });
 }
 
-const searchsButton = document.getElementById('searchs-endpoint');
-searchsButton.onclick = getBusquedas;
+// const searchsButton = document.getElementById('searchs-endpoint');
+// searchsButton.onclick = getBusquedas;
 
-const aplicationsButton = document.getElementById('aplications-endpoint');
-aplicationsButton.onclick = getAplicaciones;
+// const aplicationsButton = document.getElementById('aplications-endpoint');
+// aplicationsButton.onclick = getAplicaciones;
 
 
 

@@ -82,7 +82,7 @@ function authenticateUser(username, password) {
 			var accessToken = result.getAccessToken();
 			var idToken = result.getIdToken().getJwtToken();
 
-			console.log(result);
+			console.log(idToken);
 			localStorage.setItem('idToken', idToken);
 			window.location.href = "index.html";
 		},
