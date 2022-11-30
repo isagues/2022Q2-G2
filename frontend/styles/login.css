@@ -6,10 +6,15 @@ height: 1px;
 background: #eee;
 }
 .h-custom {
-height: calc(100% - 73px);
+height: calc(100% - 72px - 32px);
 }
 @media (max-width: 450px) {
 .h-custom {
 height: 100%;
 }
+}
+
+.hoverable-button:hover {
+  background-color: lightblue !important;
+  cursor: pointer;
 }
