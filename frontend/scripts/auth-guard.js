@@ -5,7 +5,8 @@ fetch('https://' + BASE_URL + '/api/test', {headers: {authorization: idToken}}).
     console.log('AuthGuard: unauthorized');
     alert('Your session has expired! Please login again :)')
     localStorage.removeItem('idToken');
-    window.location.href = "login.html";
+    // if (window.location.pathname === ['index.html'])
+    // window.location.href = "login.html";
   }
   else {
     reflectLoggedInUserInUI('Juan');

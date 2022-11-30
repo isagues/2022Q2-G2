@@ -15,79 +15,67 @@ async function getBusquedas() {
 
 function getAplicaciones(id) {
     var params = {
-        id: id
     };
     var body = {
     };
     var additionalParams = {
         headers: {
             "Authorization": localStorage.getItem('idToken')
+        },
+        queryParams: {
+            id: id
         }
     };
-    apigClient.verAplicacionesGet(params, body, additionalParams)
-        .then(function(result){
-            console.log('Success, payload', result); 
-        }).catch( function(result){
-            console.log('Error', result);
-        });
+    return apigClient.verAplicacionesGet(params, body, additionalParams);
 }
 
 function getBusqueda(id) {
     var params = {
-        id: id
     };
     var body = {
     };
     var additionalParams = {
         headers: {
             "Authorization": localStorage.getItem('idToken')
+        },
+        queryParams: {
+            id: id
         }
     };
-    apigClient.verBusquedaGet(params, body, additionalParams)
-        .then(function(result){
-            console.log('Success, payload', result); 
-        }).catch( function(result){
-            console.log('Error', result);
-        });
+    return apigClient.verBusquedaGet(params, body, additionalParams);
 }
 
 function nuevaBusqueda(title, description, username) {
     var params = {
-        title: title,
-        description: description,
-        username: username
     };
     var body = {
     };
     var additionalParams = {
         headers: {
             "Authorization": localStorage.getItem('idToken')
+        },
+        queryParams: {
+            title: title,
+            description: description,
+            username: username
         }
     };
-    apigClient.crearBusquedaPost(params, body, additionalParams)
-        .then(function(result){
-            console.log('Success, payload', result); 
-        }).catch( function(result){
-            console.log('Error', result);
-        });
+    return apigClient.crearBusquedaPost(params, body, additionalParams);
 }
 function nuevaAplicacion(id) {
     var params = {
-        busqueda: id
     };
     var body = {
     };
     var additionalParams = {
         headers: {
             "Authorization": localStorage.getItem('idToken')
+        },
+        queryParams: {
+            busqueda: id
         }
     };
-    apigClient.crearBusquedaPost(params, body, additionalParams)
-        .then(function(result){
-            console.log('Success, payload', result); 
-        }).catch( function(result){
-            console.log('Error', result);
-        });
+    return apigClient.crearBusquedaPost(params, body, additionalParams)
 }
 
 // const searchsButton = document.getElementById('searchs-endpoint');

@@ -27,7 +27,7 @@
     <section class="vh-100">
       <div class="d-flex flex-column flex-md-row text-center text-md-start justify-content-between px-4 px-xl-5 bg-primary">
         <div class="text-white py-2" style="display: flex;align-items: middle;">
-          <img src="img/logo-white.png" width="90">
+          <a href="index.html"><img src="img/logo-white.png" width="90"></a>
         </div>
 
         <div id="login-signup-buttons" style="display: flex;flex-direction: row">
@@ -49,7 +49,7 @@
           <div class="col-md-8 col-lg-6 col-xl-4 offset-xl-1">
             <form>
               <div class="divider d-flex align-items-center my-4">
-                <h2 class="text-center fw-bold mx-3 mb-0">Búsqueda abierta</h2>
+                <h2 class="text-center fw-bold mx-3 mb-0">Open Job Search</h2>
               </div>
 
               <div id="job-search-data"></div>
@@ -57,7 +57,7 @@
               <div id="qrcode"></div>
 
               <button id="apply-button" type="button" class="btn btn-primary btn-lg"
-                  style="padding-left: 2.5rem; padding-right: 2.5rem;">Aplicar</button>
+                  style="display: none;padding-left: 2.5rem; padding-right: 2.5rem;">Aplicar</button>
     
             </form>
           </div>
@@ -74,6 +74,6 @@
     <script defer src="scripts/apigClient.js"></script>
     <script defer src="scripts/endpoint-calls.js"></script>
     <script defer src="scripts/cognito.js"></script>
-    <script defer src="scripts/job-search.js"></script>
+    <script defer src="scripts/load-job-search-info.js"></script>
   </body>
 </html>
