@@ -2,7 +2,7 @@
 <html>
   <head>
     <title>JobSearch!</title>
-    <link href="img/favicon.ico" rel="icon">
+    <link rel="shortcut icon" type="image/icon" href="img/favicon.ico">  
     
     <!-- <script src="scripts/auth-guard.js"></script> -->
     <script defer src="https://sdk.amazonaws.com/js/aws-sdk-2.1261.0.min.js"></script>
@@ -31,16 +31,18 @@
         </div>
 
         <div id="login-signup-buttons" style="display: flex;flex-direction: row">
-          <div id="login-button" class="text-white py-4 px-2 hoverable-button">
+          <div class="text-white py-4 px-2 hoverable-button">
             <a href="login.html" style="text-decoration: none;color: white;">Log in</a>
           </div>
     
-          <div id="signup-button" class="text-white py-4 px-2 hoverable-button">
+          <div class="text-white py-4 px-2 hoverable-button">
             <a href="signup.html" style="text-decoration: none;color: white;">Register</a>
           </div>
         </div>
 
-        <div id="welcome-message" class="text-white py-4 px-2" style="display: none">
+        <div id="welcome-message-and-logout-button" style="display: none">
+          <div id="welcome-message" class="text-white py-4 px-2"></div>
+          <div id="logout-button" class="text-white py-4 px-2 hoverable-button">Log Out</div>
         </div>
       </div>
 
@@ -71,6 +73,7 @@
     </section>
     <!-- Pills content -->
     <script defer src="scripts/constants.js"></script>
+    <script defer src="scripts/auth-info.js"></script>
     <script defer src="scripts/apigClient.js"></script>
     <script defer src="scripts/endpoint-calls.js"></script>
     <script defer src="scripts/cognito.js"></script>

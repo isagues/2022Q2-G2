@@ -22,7 +22,7 @@ getBusqueda(searchId).then(function(result){
   new QRCode(document.getElementById("qrcode"), window.location.href);
   
   applyButton.onclick = function() {
-    window.location.href = `apply.html?searchId=${search.id}`;
+    window.location.href = `apply.html?searchId=${searchData.id}`;
   };
   applyButton.style.display = 'block';
 }).catch( function(result){
