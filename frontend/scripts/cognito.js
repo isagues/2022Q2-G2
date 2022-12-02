@@ -84,6 +84,7 @@ function authenticateUser(username, password) {
 
 			console.log(idToken);
 			localStorage.setItem('idToken', idToken);
+			localStorage.setItem('username', username);
 			window.location.href = "index.html";
 		},
 

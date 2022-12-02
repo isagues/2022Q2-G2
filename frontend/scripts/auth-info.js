@@ -1,8 +1,9 @@
 const authInfoIdToken = localStorage.getItem('idToken');
+const authInfoUsername = localStorage.getItem('username');
 
 fetch('https://' + BASE_URL + '/api/test', {headers: {authorization: authInfoIdToken}}).then((res) => {
   if (res.status === 200){
-    reflectLoggedInUserInUI('Juan');
+    reflectLoggedInUserInUI(authInfoUsername);
   }
 }).catch((err) => console.log(err));
 
@@ -19,6 +20,7 @@ function reflectLoggedInUserInUI(username) {
 
   logoutButton.addEventListener('click', () => {
     localStorage.removeItem('idToken');
+    localStorage.removeItem('username');
     window.location.href = "login.html";
   });
 
