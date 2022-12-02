@@ -8,9 +8,20 @@ exports.handler = async (event, context) => {
   const headers = {
     "Content-Type": "application/json"
   };
-
+  const queryParams = event.queryStringParameters;
   try {
-    body = await dynamo.scan({
+    if (queryParams && queryParams.username) {
+      body = await dynamo.scan({
+        TableName: "job-searchs",
+        FilterExpression : "application = :metadata and username = :username",
+        ExpressionAttributeValues: {
+          ":metadata" : "metadata",
+          ":username" : queryParams.username
+        } 
+      })
+      .promise();
+    } else {
+      body = await dynamo.scan({
         TableName: "job-searchs",
         FilterExpression : "application = :metadata",
         ExpressionAttributeValues: {
@@ -18,6 +29,7 @@ exports.handler = async (event, context) => {
         } 
       })
       .promise();
+    }
   } catch (err) {
     statusCode = 400;
     body = err.message;
