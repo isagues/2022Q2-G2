@@ -29,6 +29,24 @@ getBusqueda(searchId).then(function(result){
   console.log('Error', result);
 });
 
+if (queryParams.get('showApplicants') === 'true') {
+  console.log('loading applicants...');
+  const applicantsContainerElem = document.getElementById('applicants-container');
+  applicantsContainerElem.style.display = 'block';
+  getAplicaciones(searchId).then(function(result) {
+    console.log('Success, applicants:', result);
+    const applicantsListElem = document.getElementById('applicants-list');
+    applicantsListElem.innerHTML = '';
+    result.data.Items.forEach((application) => {
+      applicantsListElem.innerHTML += `<li class="list-group-item"> <a style="text-decoration: none;color: black;"><b>${application.application}:</b></div></li>`;
+    });
+  }).catch((error) => {
+    localStorage.removeItem('idToken');
+    localStorage.removeItem('username');
+    window.location.href = window.location.href.split('&showApplicants')[0];
+  });
+}
+
 
 function generateJobSearchDataElement(searchData) {
   return `<h3>Title</h3>\
