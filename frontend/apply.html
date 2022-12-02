@@ -42,6 +42,9 @@
         <div id="welcome-message-and-logout-button" style="display: none">
           <div id="welcome-message" class="text-white py-4 px-2"></div>
           <div class="text-white py-4 px-2 hoverable-button">
+            <a href="my-job-searches.html" style="text-decoration: none;color: white;">My job searches</a>
+          </div>
+          <div class="text-white py-4 px-2 hoverable-button">
             <a href="create-job-search.html" style="text-decoration: none;color: white;">Create job search</a>
           </div>
           <div id="logout-button" class="text-white py-4 px-2 hoverable-button">Log Out</div>
@@ -51,7 +54,7 @@
       <div class="container-fluid h-custom">
         <div class="row d-flex justify-content-center align-items-center h-100">
           <div class="col-md-8 col-lg-6 col-xl-4 offset-xl-1">
-            <form>
+            <form id="apply-form">
               <div class="divider d-flex align-items-center my-4">
                 <h2 class="text-center fw-bold mx-3 mb-0">Aplicar a busqueda</h2>
               </div>
@@ -61,14 +64,13 @@
               <form id="form" method=POST enctype=multipart/form-data>
                 <!-- upload of a single file -->
                 <p>
-                  <label>Cargar un CV: </label><br />
+                  <label>Upload a CV: </label><br />
                   <input type="file" id="cv" name="cv" accept="application/pdf" />
                 </p>
-                <p>
+                <!-- <p>
                   <input type="submit" />
-                </p>
+                </p> -->
               </form>
-
 
               <button id="apply-button" type="button" class="btn btn-primary btn-lg"
               style="padding-left: 2.5rem; padding-right: 2.5rem;">Aplicar</button>
@@ -86,6 +88,6 @@
     <!-- Pills content -->
     <script defer src="scripts/constants.js"></script>
     <script defer src="scripts/auth-info.js"></script>
-    <script defer src="scripts/apply.js"></script>    
+    <script defer src="scripts/apply-form.js"></script>    
   </body>
 </html>

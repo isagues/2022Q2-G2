@@ -1,6 +1,6 @@
 var apigClient = apigClientFactory.newClient();
 
-async function getBusquedas() {
+function getBusquedas() {
     var params = {
     };
     var body = {
@@ -9,6 +9,22 @@ async function getBusquedas() {
         headers: {
             "Authorization": localStorage.getItem('idToken')
         },
+    };
+    return apigClient.listarBusquedasGet(params, body, additionalParams);
+}
+
+function getBusquedasDeUsuario(username) {
+    var params = {
+    };
+    var body = {
+    };
+    var additionalParams = {
+        headers: {
+            "Authorization": localStorage.getItem('idToken')
+        },
+        queryParams: {
+            "username": username 
+        }
     };
     return apigClient.listarBusquedasGet(params, body, additionalParams);
 }
