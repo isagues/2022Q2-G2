@@ -38,11 +38,11 @@ if (queryParams.get('showApplicants') === 'true') {
     const applicantsListElem = document.getElementById('applicants-list');
     applicantsListElem.innerHTML = '';
     result.data.Items.forEach((application) => {
-      applicantsListElem.innerHTML += `<li class="list-group-item"> <a style="text-decoration: none;color: black;"><b>${application.application}:</b></div></li>`;
+      applicantsListElem.innerHTML += `<li class="list-group-item"> <a href="${application.url}" style="text-decoration: none;color: black;"><b>${application.fname}:</b></div></li>`;
     });
   }).catch((error) => {
-    localStorage.removeItem('idToken');
-    localStorage.removeItem('username');
+    // localStorage.removeItem('idToken');
+    // localStorage.removeItem('username');
     window.location.href = window.location.href.split('&showApplicants')[0];
   });
 }

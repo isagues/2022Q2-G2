@@ -1,9 +1,10 @@
 // const form = document.getElementById('apply-form');
 const cv = document.getElementById('cv');
+const fname = document.getElementById('fname');
 
 const queryParamsString = window.location.search.split('?')[1];
 const queryParams = new URLSearchParams(queryParamsString);
-const searchId = queryParams.get('searchId');
+const searchId = queryParams.get('id');
 if (!searchId) window.location.href = 'not-found.html';
 
 async function sendIT() {
@@ -12,6 +13,7 @@ async function sendIT() {
 
   const URLresponse = await fetch(url, {
     method: 'POST',
+    body: JSON.stringify({fname: fname.value})
   });
 
   console.log(URLresponse);

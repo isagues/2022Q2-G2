@@ -16,33 +16,42 @@ exports.handler = async function (event, context) {
     const bucket = event.Records[0].s3.bucket.name;
 
     const ids = unescape(uploadedFile).split(";");
-    const idBusqueda = ids[0].split("#")[1];
 
     const signedURL = await s3.getSignedUrlPromise('getObject', {
         "Bucket": bucket,
         "Key": unescape(uploadedFile),
     });
 
-    await dynamo.put({
+    await dynamo.update({
+        ExpressionAttributeValues: {
+            ":u": true,
+            ":s": uploadedFile,
+            ":us": unescape(uploadedFile)
+        },
         TableName: "job-searchs",
-        Item: {
-            id: parseInt(idBusqueda),
+        Key: {
+            id: ids[0],
             application: ids[1].replace(/.pdf/g, ''),
-            uploaded: true,
-            s3Key: uploadedFile,
-            unescapedS3Key: unescape(uploadedFile)
-        }
+        },
+        UpdateExpression: "SET uploaded = :u, s3Key = :s, unescapedS3Key = :us"
     }).promise();
 
     return await sns.publish({
-        Message: JSON.stringify({ uploadedFile: uploadedFile, idBusqueda: idBusqueda, URL: signedURL }),
+        Message: `
+            New application for search: ${ids[0].split("#")[1]}.
+
+            View application on:
+
+            ${signedURL}
+        `,
+        // JSON.stringify({ uploadedFile: uploadedFile, idBusqueda: ids[0], URL: signedURL }),
         MessageAttributes: {
-            'busqueda': {
+            'searchID': {
                 DataType: 'String',
                 StringValue: ids[0]
             },
         },
-        Subject: "Test SNS From Lambda",
+        Subject: "New application!",
         TopicArn: topicARN
     }).promise()
 

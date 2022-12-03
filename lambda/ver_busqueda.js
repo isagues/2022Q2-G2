@@ -12,9 +12,9 @@ exports.handler = async (event, context) => {
   const queryParams = event.queryStringParameters;
   try {
     body = await dynamo.get({
-      TableName : 'job-searchs',
+      TableName: 'job-searchs',
       Key: {
-        id: Number(queryParams.id),
+        id: queryParams.id,
         application: 'metadata'
       }
     })

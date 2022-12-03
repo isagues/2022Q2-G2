@@ -3,6 +3,6 @@ exports.handler = async (event) => {
         "isBase64Encoded": false,
         "statusCode": 200,
         "headers": { },
-        "body": JSON.stringify({ Hola: "cloud" })
+        "body": JSON.stringify({ Hola: "cloud", event: event })
     }
 };

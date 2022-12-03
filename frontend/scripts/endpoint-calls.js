@@ -13,7 +13,7 @@ function getBusquedas() {
     return apigClient.listarBusquedasGet(params, body, additionalParams);
 }
 
-function getBusquedasDeUsuario(username) {
+function getBusquedasDeUsuario() {
     var params = {
     };
     var body = {
@@ -23,7 +23,7 @@ function getBusquedasDeUsuario(username) {
             "Authorization": localStorage.getItem('idToken')
         },
         queryParams: {
-            "username": username 
+            "own": true 
         }
     };
     return apigClient.listarBusquedasGet(params, body, additionalParams);

@@ -10,25 +10,25 @@ exports.handler = async (event, context) => {
   };
   const queryParams = event.queryStringParameters;
   try {
-    if (queryParams && queryParams.username) {
+    if (queryParams && queryParams.own) {
       body = await dynamo.scan({
         TableName: "job-searchs",
-        FilterExpression : "application = :metadata and username = :username",
+        FilterExpression: "application = :metadata and username = :username",
         ExpressionAttributeValues: {
-          ":metadata" : "metadata",
-          ":username" : queryParams.username
-        } 
+          ":metadata": "metadata",
+          ":username": event.requestContext.authorizer.claims["cognito:username"]
+        }
       })
-      .promise();
+        .promise();
     } else {
       body = await dynamo.scan({
         TableName: "job-searchs",
-        FilterExpression : "application = :metadata",
+        FilterExpression: "application = :metadata",
         ExpressionAttributeValues: {
-          ":metadata" : "metadata"
-        } 
+          ":metadata": "metadata"
+        }
       })
-      .promise();
+        .promise();
     }
   } catch (err) {
     statusCode = 400;
