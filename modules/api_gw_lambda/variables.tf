@@ -23,12 +23,8 @@ variable "security_groups" {
   type        = list(string)
 }
 
-# variable "base_domain" {
-#   description = "Application base domain"
-#   type        = string
-# }
-
 variable "ssm_endpoint" {
+  description = "ARN of SSM's enpoint"
   type        = string
 }
 
@@ -49,6 +45,7 @@ variable "gateway_resource_id" {
 }
 
 variable "execution_arn" {
+  description = "API Gateway's execution ARN"
   type        = string
 }
 

@@ -18,7 +18,6 @@ data "aws_iam_policy_document" "this" {
   }
 }
 
-
 resource "aws_ssm_parameter" "s3_cvs" {
   name  = "/s3/cvs/bucketName"
   type  = "String"
@@ -50,7 +49,7 @@ module "cvs" {
       allowed_headers = ["*"]
       expose_headers  = ["ETag"]
       max_age_seconds = 3000
-      }
+    }
   ]
 
   acl = "private" # "acl" conflicts with "grant" and "owner"

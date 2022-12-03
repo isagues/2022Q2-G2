@@ -2,23 +2,20 @@ data "aws_route53_zone" "this" {
   name = var.base_domain
 }
 
-# resource "aws_route53_record" "www" {
-#   zone_id = data.aws_route53_zone.main.zone_id
-#   name    = "www.${var.app_domain}"
-#   type    = "CNAME"
+resource "aws_route53_record" "www" {
+  zone_id = data.aws_route53_zone.this.zone_id
+  name    = "www.${var.app_domain}"
+  type    = "CNAME"
+  ttl     = 900
 
-#   depends_on = [
-#     aws_route53_record.main
-#   ]
+  records = ["${var.app_domain}"]
 
-#   alias {
-#     name    = aws_route53_record.main.name
-#     zone_id =  data.aws_route53_zone.main.id
-#     evaluate_target_health = false
-#   }
-# }
+  depends_on = [
+    aws_route53_record.base
+  ]
+}
 
-resource "aws_route53_record" "this" {
+resource "aws_route53_record" "base" {
   zone_id = data.aws_route53_zone.this.zone_id
   name    = var.app_domain
   type    = "A"

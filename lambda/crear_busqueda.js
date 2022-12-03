@@ -16,7 +16,7 @@ exports.handler = async (event, context) => {
   const queryParams = event.queryStringParameters;
 
   const ssm = new AWS.SSM({ endpoint: process.env.ssm_endpoint });
-  const topicARN = (await ssm.getParameter({ Name: '/sns/new_users/topicARN' }).promise()).Parameter.Value;
+  const topicARN = (await ssm.getParameter({ Name: '/sns/applications/topicARN' }).promise()).Parameter.Value;
   const endpointURL = (await ssm.getParameter({ Name: '/endpoint/sns/dns' }).promise()).Parameter.Value;
   const sns = new AWS.SNS({ endpoint: endpointURL });
 

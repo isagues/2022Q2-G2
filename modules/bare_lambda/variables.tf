@@ -1,12 +1,15 @@
 variable "function_name" {
+    description = "Name associated to the lambda function"
     type = string
 }
 
 variable "role" {
+  description = "The lambda VPC subnet ids"
     type = string 
 }
 
 variable "runtime" {
+description = "Lambda runtime"
   type = string
   default = "nodejs16.x"
 }
@@ -22,5 +25,6 @@ variable "security_groups" {
 }
 
 variable "ssm_endpoint" {
+  description = "ARN of SSM's enpoint"
   type        = string
 }

@@ -10,7 +10,7 @@ module "lambda" {
 
 
 # LAMBDA INVOCATION PERMISSION
-resource "aws_lambda_permission" "apigw_lambda" {
+resource "aws_lambda_permission" "this" {
   statement_id  = "AllowExecutionFromAPIGateway"
   action        = "lambda:InvokeFunction"
   function_name = var.function_name

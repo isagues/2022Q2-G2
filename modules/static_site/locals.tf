@@ -11,9 +11,9 @@ locals {
 
   file_with_type = flatten([
     for type, mime in local.filetypes : [
-      for k, v in fileset("${var.src}/", "**/*.${type}") : {
+      for key, value in fileset("${var.src}/", "**/*.${type}") : {
         mime = mime
-        file = v
+        file_name = value
       }
     ]
   ])

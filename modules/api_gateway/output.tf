@@ -10,7 +10,7 @@ output "id" {
 
 output "gateway_authorizer_id" {
   description = "The api gateway authorizer id"
-  value       = aws_api_gateway_authorizer.api_authorizer.id
+  value       = aws_api_gateway_authorizer.this.id
 }
 
 output "execution_arm" {
@@ -24,11 +24,11 @@ output "resource_id" {
 
 output "user_pool_id" {
   description = "user pool id"
-  value       = aws_cognito_user_pool.pool.id
+  value       = aws_cognito_user_pool.this.id
 }
 
 output "client_pool_id" {
   description = "client pool id"
-  value       = aws_cognito_user_pool_client.client.id
+  value       = aws_cognito_user_pool_client.this.id
 }
 

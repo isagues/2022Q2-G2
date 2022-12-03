@@ -1,8 +1,8 @@
 module "job_searchs_table" {
   source = "terraform-aws-modules/dynamodb-table/aws"
 
-  name     = "job-searchs"
-  hash_key = "id"
+  name      = "job-searchs"
+  hash_key  = "id"
   range_key = "application"
 
   attributes = [
@@ -19,12 +19,12 @@ module "job_searchs_table" {
       type = "S"
     }
   ]
-  
+
   global_secondary_indexes = [
     {
-      name               = "user-index"
-      hash_key           = "username"
-      projection_type    = "ALL"
+      name            = "user-index"
+      hash_key        = "username"
+      projection_type = "ALL"
     }
   ]
 }

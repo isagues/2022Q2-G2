@@ -1,12 +1,13 @@
-resource "aws_sns_topic" "cloudwatch" {
-  name_prefix = "cloudwatch-notifications"
-}
-resource "aws_sns_topic" "new_users" {
-  name_prefix = "new-users-notifications"
+resource "aws_sns_topic" "this" {
+  for_each = toset(local.sns)
+
+  name_prefix = each.key
 }
 
-resource "aws_ssm_parameter" "new_users" {
-  name  = "/sns/new_users/topicARN"
+resource "aws_ssm_parameter" "this" {
+  for_each = toset(local.sns)
+
+  name  = "/sns/${each.key}/topicARN"
   type  = "String"
-  value = aws_sns_topic.new_users.arn
+  value = aws_sns_topic.this[each.key].arn
 }

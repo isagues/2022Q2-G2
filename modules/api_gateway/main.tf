@@ -31,30 +31,30 @@ resource "aws_api_gateway_deployment" "this" {
 }
 
 # PROD STAGE
-resource "aws_api_gateway_stage" "api" {
+resource "aws_api_gateway_stage" "this" {
   deployment_id = aws_api_gateway_deployment.this.id
   rest_api_id   = aws_api_gateway_rest_api.this.id
   stage_name    = "api"
 }
 
 
-resource "aws_cognito_user_pool" "pool" {
+resource "aws_cognito_user_pool" "this" {
   name = "TiraCVUsers"
   auto_verified_attributes = ["email"]
   # email_sending_account = "COGNITO_DEFAULT"
 }
 
-resource "aws_api_gateway_authorizer" "api_authorizer" {
+resource "aws_api_gateway_authorizer" "this" {
   name                   = "CognitoUserPoolAuthorizer"
   type                   = "COGNITO_USER_POOLS"
   rest_api_id            = aws_api_gateway_rest_api.this.id
-  provider_arns          = [aws_cognito_user_pool.pool.arn]
+  provider_arns          = [aws_cognito_user_pool.this.arn]
 }
 
-resource "aws_cognito_user_pool_client" "client" {
+resource "aws_cognito_user_pool_client" "this" {
   name = "tiraCvClient"
 
-  user_pool_id = aws_cognito_user_pool.pool.id
+  user_pool_id = aws_cognito_user_pool.this.id
 }
 
 

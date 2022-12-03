@@ -13,5 +13,6 @@ variable "zones_count" {
 }
 
 variable "endpoint_services" {
+  description = "VPC enpoints."
   type = list(object({service: string, type: string, security_groups: list(string)}))
 }
