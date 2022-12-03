@@ -1,5 +1,5 @@
 resource "aws_wafv2_web_acl" "this" {
-  name        = "rate-based-example"
+  name        = "waf"
   description = "Example of a Cloudfront rate based statement."
   scope       = "CLOUDFRONT"
 
