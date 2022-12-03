@@ -43,7 +43,7 @@ module "s3" {
   ignore_public_acls      = true
   restrict_public_buckets = true
 
-  acl = "private" # "acl" conflicts with "grant" and "owner"
+  acl = "private"
 
   versioning = {
     status     = true

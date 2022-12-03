@@ -33,8 +33,6 @@ module "cvs" {
   # Bucket policies
   attach_policy = true
   policy        = data.aws_iam_policy_document.this.json
-  # attach_deny_insecure_transport_policy = true
-  # attach_require_latest_tls_policy      = true
 
   # S3 bucket-level Public Access Block configuration
   block_public_acls       = true
@@ -52,7 +50,7 @@ module "cvs" {
     }
   ]
 
-  acl = "private" # "acl" conflicts with "grant" and "owner"
+  acl = "private"
 
   versioning = {
     status     = true
