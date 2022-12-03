@@ -1,25 +1,5 @@
-variable "tags" {
-  description = "The lambda function tags"
-  type        = map(any)
-}
-
-variable "filename" {
-  description = "The lambda executable filename"
-  type        = string
-}
-
 variable "function_name" {
-  description = "The lambda function name"
-  type        = string
-}
-
-variable "handler" {
-  description = "The lambda exectuable handler"
-  type        = string
-}
-
-variable "runtime" {
-  description = "The lambda function runtime"
+  description = "The lambda executable filename"
   type        = string
 }
 
@@ -43,10 +23,10 @@ variable "security_groups" {
   type        = list(string)
 }
 
-variable "base_domain" {
-  description = "Application base domain"
-  type        = string
-}
+# variable "base_domain" {
+#   description = "Application base domain"
+#   type        = string
+# }
 
 variable "ssm_endpoint" {
   type        = string
