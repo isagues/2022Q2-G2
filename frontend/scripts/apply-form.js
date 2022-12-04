@@ -4,8 +4,9 @@ const fname = document.getElementById('fname');
 
 const queryParamsString = window.location.search.split('?')[1];
 const queryParams = new URLSearchParams(queryParamsString);
-const searchId = queryParams.get('id');
+let searchId = queryParams.get('id');
 if (!searchId) window.location.href = 'not-found.html';
+searchId = decodeURIComponent(searchId);
 
 async function sendIT() {
   const url = new URL("/api/getPresignedURL", document.baseURI);
@@ -30,7 +31,7 @@ async function sendIT() {
     body: cv.files[0],
   });
   console.log(response);
-  if (response.status === '200') {
+  if (response.status === '200' || response.status === 200) {
     alert('Your CV has been uploaded and you have successfully applied for the position. Good luck!');
     window.location.href = 'index.html';
   }

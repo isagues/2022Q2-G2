@@ -5,12 +5,14 @@ const applyButton = document.getElementById('apply-button');
 
 const queryParamsString = window.location.search.split('?')[1];
 const queryParams = new URLSearchParams(queryParamsString);
-const searchId = queryParams.get('id');
+let searchId = queryParams.get('id');
 
 if (!searchId){
   console.log('No search id provided in query params, redirecting to 404');
   window.location.href = 'not-found.html';
 }
+
+searchId = decodeURIComponent(searchId);
 
 getBusqueda(searchId).then(function(result){
   console.log('Success, payload', result);
@@ -22,7 +24,7 @@ getBusqueda(searchId).then(function(result){
   new QRCode(document.getElementById("qrcode"), window.location.href);
   
   applyButton.onclick = function() {
-    window.location.href = `apply.html?searchId=${searchData.id}`;
+    window.location.href = `apply.html?id=${encodeURIComponent(searchData.id)}`;
   };
   applyButton.style.display = 'block';
 }).catch( function(result){
@@ -36,10 +38,11 @@ if (queryParams.get('showApplicants') === 'true') {
   getAplicaciones(searchId).then(function(result) {
     console.log('Success, applicants:', result);
     const applicantsListElem = document.getElementById('applicants-list');
-    applicantsListElem.innerHTML = '';
+    applicantsListElem.innerHTML = 'Loading applicants...';
     result.data.Items.forEach((application) => {
       applicantsListElem.innerHTML += `<li class="list-group-item"> <a href="${application.url}" style="text-decoration: none;color: black;"><b>${application.fname}:</b></div></li>`;
     });
+    if (result.data.Items.length === 0) applicantsListElem.innerHTML = 'No applicants yet.';
   }).catch((error) => {
     // localStorage.removeItem('idToken');
     // localStorage.removeItem('username');
