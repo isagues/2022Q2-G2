@@ -39,10 +39,13 @@ if (queryParams.get('showApplicants') === 'true') {
     console.log('Success, applicants:', result);
     const applicantsListElem = document.getElementById('applicants-list');
     applicantsListElem.innerHTML = 'Loading applicants...';
+    if (result.data.Items.length === 0)
+      applicantsListElem.innerHTML = 'No applicants yet.';
+    else
+      applicantsListElem.innerHTML = '';
     result.data.Items.forEach((application) => {
       applicantsListElem.innerHTML += `<li class="list-group-item"> <a href="${application.url}" style="text-decoration: none;color: black;"><b>${application.fname}:</b></div></li>`;
     });
-    if (result.data.Items.length === 0) applicantsListElem.innerHTML = 'No applicants yet.';
   }).catch((error) => {
     // localStorage.removeItem('idToken');
     // localStorage.removeItem('username');

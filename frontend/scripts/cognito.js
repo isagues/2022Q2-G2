@@ -55,6 +55,7 @@ function confirmUser(username, confirmationCode) {
 			return;
 		}
 		console.log(result);
+		alert('User confirmed successfully! Please log in :)');
 		window.location.href = "login.html";
 	});
 }
