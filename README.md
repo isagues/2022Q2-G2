@@ -96,3 +96,5 @@ Se hizo uso de los siguientes meta argumentos.
 - **count:** Se utilizó este argumento para la generación de las subredes privadas de forma dinámica. En: `vpc/main.tf`
 - **for_each:** Se utilizó este argumento para la subida de los archivos. Permite iterar la lista con todos los archivos y subirlos de a uno. En: `static_site/upload.tf`
 - **depends_on:** Se utilizó este argumento para el manejo de dependencias en la configuración de las funciones lambdas y su mapeo en el API Gateway. En: `lambda/main.tf`
+
+
