@@ -98,3 +98,4 @@ Se hizo uso de los siguientes meta argumentos.
 - **depends_on:** Se utilizó este argumento para el manejo de dependencias en la configuración de las funciones lambdas y su mapeo en el API Gateway. En: `lambda/main.tf`
 
 
+
